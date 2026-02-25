@@ -1,4 +1,5 @@
 import {NavLink, Outlet } from "react-router-dom";
+import React from "react";
 
 const MainLayout = () => {
   return (
@@ -9,6 +10,7 @@ const MainLayout = () => {
         <NavLink to="/contact">Contact</NavLink>
         <NavLink to="/register">Register</NavLink>
         <NavLink to="/login">Login</NavLink>
+        <NavLink to="/booking">Booking</NavLink>
       </nav>
 
       <main>

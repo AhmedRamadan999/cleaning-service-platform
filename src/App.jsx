@@ -6,6 +6,8 @@ import Services from "./pages/Services";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import React from "react";
+import Booking from "./pages/Booking";
 
 const App = () => {
   return (
@@ -16,6 +18,7 @@ const App = () => {
         <Route path="contact" element={<Contact />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="Booking" element={<Booking />} />
       </Route>
     </Routes>
   );
