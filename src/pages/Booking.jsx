@@ -1,6 +1,6 @@
 import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+
 const Booking = () => {
   const [week, setWeek] = useState("");
   const [period, setPeriod] = useState("");
@@ -11,7 +11,7 @@ const Booking = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (week === "" || period === "") {
-      setError("Please choose week and period");
+      setError("Bitte wählen Sie eine Woche und einen Zeitraum aus.");
       return;
     }
     setError("");
@@ -19,6 +19,7 @@ const Booking = () => {
     setWeek("");
     setPeriod("");
   };
+
   useEffect(() => {
     if (success) {
       const timer = setTimeout(() => {
@@ -30,7 +31,7 @@ const Booking = () => {
 
   return (
     <>
-      <h1>Booking</h1>
+      <h1>Termin buchen</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="week"
@@ -39,25 +40,28 @@ const Booking = () => {
         />
 
         <select value={period} onChange={(e) => setPeriod(e.target.value)}>
-          <option value=""> Choose...</option>
-          <option value="Vormittag"> Vormittag...</option>
-          <option value="Nachmittag"> Nachmittag...</option>
+          <option value="">Bitte auswählen…</option>
+          <option value="Vormittag">Vormittag</option>
+          <option value="Nachmittag">Nachmittag</option>
         </select>
+
         <button type="submit" disabled={!isValid}>
-          Send
+          Absenden
         </button>
       </form>
+
       {week && period && (
         <p>
-          {" "}
           Sie haben {week} - {period} gewählt.
         </p>
       )}
+
       {error && <p style={{ color: "red" }}>{error}</p>}
+
       {success && (
         <p>
-          Der Termin wurde Ihnen mitgeteilt, und Sie werden in Kürze kontaktiert
-          ✅.
+          ✅ Vielen Dank! Ihre Terminanfrage wurde gesendet. Wir kontaktieren
+          Sie in Kürze.
         </p>
       )}
     </>
