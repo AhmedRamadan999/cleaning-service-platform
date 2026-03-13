@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import "../styles/services.css"
 
 export default function Service() {
   const servicesData = [
@@ -27,16 +28,18 @@ export default function Service() {
 
   return (
     <>
-      <h1>Unsere Services</h1>
-      <div>
+    <div className="services">
+      <h1 className="services-title">Unsere Services</h1>
+      <div className="services-grid">
         {servicesData.map((service) => (
           <div key={service.id}>
             <h3>{service.title}</h3>
             <p>{service.desc}</p>
-            <p>Preis: {service.price} €</p>
-            <NavLink to="/booking">Jetzt buchen</NavLink>
+            <p className="price">Preis: {service.price} €</p>
+            <NavLink className= "book-btn" to="/booking">Jetzt buchen</NavLink>
           </div>
         ))}
+      </div>
       </div>
     </>
   );

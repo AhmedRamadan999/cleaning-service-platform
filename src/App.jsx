@@ -1,4 +1,4 @@
-import "./App.css";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home";
@@ -6,7 +6,6 @@ import Services from "./pages/Services";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import React from "react";
 import Booking from "./pages/Booking";
 
 const App = () => {
@@ -18,7 +17,7 @@ const App = () => {
         <Route path="contact" element={<Contact />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
-        <Route path="Booking" element={<Booking />} />
+        <Route path="booking" element={<Booking />} />
       </Route>
     </Routes>
   );
