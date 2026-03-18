@@ -1,16 +1,17 @@
 require("dotenv").config();
 const express = require("express");
+const { PrismaClient } = require("@prisma/client");
+const { Pool } = require("pg");
 
 const app = express();
-const { Pool } = require("pg")
+
+const prisma = new PrismaClient();
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
 });
 
 app.use(express.json());
-
-
 
 app.get("/", (req, res) => {
     res.send("Backend working ✅");
@@ -23,9 +24,6 @@ app.post("/test", (req, res) => {
         data: req.body,
     });
 });
-
-
-
 
 app.post("/create-users-table", async (req, res) => {
     try {
@@ -49,43 +47,21 @@ app.post("/create-users-table", async (req, res) => {
     }
 });
 
-
 app.post("/bookings", async (req, res) => {
     try {
         const { week, period } = req.body;
 
-        const sql = `
-      INSERT INTO bookings (week, period)
-      VALUES ($1, $2)
-      RETURNING *
-    `;
-
-        const result = await pool.query(sql, [week, period]);
+        const booking = await prisma.booking.create({
+            data: {
+                week,
+                period,
+            },
+        });
 
         res.json({
             message: "booking created",
-            booking: result.rows[0]
+            booking,
         });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: error.message });
-    }
-});
-
-app.post("/create-bookings-table", async (req, res) => {
-    try {
-        const sql = `
-      CREATE TABLE IF NOT EXISTS bookings (
-        id SERIAL PRIMARY KEY,
-        week VARCHAR(20) NOT NULL,
-        period VARCHAR(50) NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      );
-    `;
-
-        await pool.query(sql);
-
-        res.json({ message: "bookings table created successfully" });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: error.message });
