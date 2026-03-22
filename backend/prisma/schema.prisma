@@ -4,12 +4,12 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 model Booking {
-  id    Int    @id @default(autoincrement())
-  week   String
-  period  String
+  id        Int      @id @default(autoincrement())
+  week      String
+  period    String
   createdAt DateTime @default(now())
 }
