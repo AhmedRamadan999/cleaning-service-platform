@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
 const { PrismaClient } = require("@prisma/client");
 const { Pool } = require("pg");
 
@@ -11,6 +12,7 @@ const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
 });
 
+app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
