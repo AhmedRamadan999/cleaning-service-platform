@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-
+import { useLocation } from "react-router-dom";
 const Booking = () => {
   const [week, setWeek] = useState("");
   const [period, setPeriod] = useState("");
@@ -8,16 +8,35 @@ const Booking = () => {
   const isValid = week !== "" && period !== "";
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const location = useLocation();
+  const selectedService = location.state?.service;
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (week === "" || period === "") {
       setError("Bitte wählen Sie eine Woche und einen Zeitraum aus.");
       return;
     }
     setError("");
-    setSuccess(true);
-    setWeek("");
-    setPeriod("");
+    setSuccess(false);
+    const bookingData = {
+      week,
+      period,
+    };
+    const response = await fetch("http://localhost:3000/bookings", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(bookingData),
+    });
+
+    if (response.ok) {
+      setSuccess(true);
+      setWeek("");
+      setPeriod("");
+    } else {
+      setError("Fehler beim Senden der Anfrage");
+    }
   };
 
   useEffect(() => {
@@ -32,6 +51,7 @@ const Booking = () => {
   return (
     <>
       <h1>Termin buchen</h1>
+      {selectedService && <h3>Sie haben {selectedService} gewählt</h3>}
       <form onSubmit={handleSubmit}>
         <input
           type="week"
