@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import "../styles/booking.css"
 const Booking = () => {
   const [week, setWeek] = useState("");
   const [period, setPeriod] = useState("");
@@ -52,24 +53,25 @@ const Booking = () => {
     <>
       <h1>Termin buchen</h1>
       {selectedService && <h3>Sie haben {selectedService} gewählt</h3>}
-      <form onSubmit={handleSubmit}>
-        <input
-          type="week"
-          value={week}
-          onChange={(e) => setWeek(e.target.value)}
-        />
+      <div className="booking-wrapper">
+        <form onSubmit={handleSubmit} className="booking-form">
+          <input
+            type="week"
+            value={week}
+            onChange={(e) => setWeek(e.target.value)}
+          />
 
-        <select value={period} onChange={(e) => setPeriod(e.target.value)}>
-          <option value="">Bitte auswählen…</option>
-          <option value="Vormittag">Vormittag</option>
-          <option value="Nachmittag">Nachmittag</option>
-        </select>
+          <select value={period} onChange={(e) => setPeriod(e.target.value)}>
+            <option value="">Bitte auswählen…</option>
+            <option value="Vormittag">Vormittag</option>
+            <option value="Nachmittag">Nachmittag</option>
+          </select>
 
-        <button type="submit" disabled={!isValid}>
-          Absenden
-        </button>
-      </form>
-
+          <button type="submit" disabled={!isValid}>
+            Absenden
+          </button>
+        </form>
+      </div>
       {week && period && (
         <p>
           Sie haben {week} - {period} gewählt.

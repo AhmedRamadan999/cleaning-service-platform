@@ -1,0 +1,21 @@
+.booking-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.booking-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.booking-form input,
+.booking-form select,
+.booking-form button {
+    padding: 10px 14px;
+    height: 42px;
+    border-radius: 8px;
+}
