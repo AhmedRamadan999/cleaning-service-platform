@@ -1,5 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate, NavLink } from "react-router-dom";
+import "../styles/login.css";
 
-export default function Login() {
-  return <h1>Login</h1>;
-}
+const Login = () => {
+  const navigate = useNavigate();
+
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+};
+
+export default Login;
