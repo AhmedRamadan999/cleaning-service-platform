@@ -1,63 +1,49 @@
 import React, { useState } from "react";
 import "../styles/contact.css";
-import { SUBJECTS, PLACEHOLDERS } from "../constants/contactData";
 
 const INITIAL_FORM_STATE = { name: "", email: "", subject: "", message: "" };
 const INITIAL_STATUS = { loading: false, error: "", success: false };
 
 const Contact = () => {
-  // status ← يحفظ حالة الإرسال (تحميل / خطأ / نجاح)
   const [form, setForm] = useState(INITIAL_FORM_STATE);
   const [status, setStatus] = useState(INITIAL_STATUS);
 
-  // يُستدعى عند الكتابة في أي حقل
-  // { target: { name, value } } ← نأخذ اسم الحقل وقيمته مباشرة من الحدث
-  const handleChange = ({ target: { name, value } }) => {
-    // لو كان هناك خطأ أو نجاح سابق → نمسحه فور ما يبدأ المستخدم بالكتابة
-    if (status.error || status.success) setStatus(INITIAL_STATUS);
+  const handleChange = (e) => {
+    if (status.error || status.success) {
+      setStatus(INITIAL_STATUS);
+    }
 
-    // نحدّث الحقل الذي تغيّر فقط، ونبقي باقي الحقول كما هي
-    setForm((prev) => ({ ...prev, [name]: value }));
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // نمنع إعادة تحميل الصفحة
+    e.preventDefault();
 
-    // Object.values → نأخذ قيم الحقول كمصفوفة
-    // .some(v => !v) → نتحقق إذا كان أي حقل فارغاً
-    if (Object.values(form).some((value) => !value)) {
+    if (!form.name || !form.email || !form.subject || !form.message) {
       setStatus({
         ...INITIAL_STATUS,
         error: "Bitte füllen Sie alle Felder aus.",
       });
-      return; // نوقف التنفيذ ولا نرسل
+      return;
     }
 
     try {
-      // نضع loading: true حتى يظهر "جاري الإرسال..." ويتعطّل الزر
       setStatus({ ...INITIAL_STATUS, loading: true });
 
-      // نقرأ رابط الـ API من متغيرات البيئة، وإذا لم يوجد نستخدم localhost
       const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
-      // نرسل البيانات إلى السيرفر بصيغة JSON
       const res = await fetch(`${API_URL}/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form), // نحوّل الكائن إلى نص JSON
+        body: JSON.stringify(form),
       });
 
-      // إذا كان رد السيرفر غير ناجح (مثلاً 400 أو 500)
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || "Etwas ist schiefgelaufen."); // نرمي الخطأ لـ catch
-      }
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Etwas ist schiefgelaufen.");
 
-      // الإرسال نجح → نفرّغ النموذج ونُظهر رسالة النجاح
       setStatus({ ...INITIAL_STATUS, success: true });
       setForm(INITIAL_FORM_STATE);
     } catch (err) {
-      // أي خطأ (شبكة أو سيرفر) → نُظهر نص الخطأ للمستخدم
       setStatus({ ...INITIAL_STATUS, error: err.message });
     }
   };
@@ -65,41 +51,32 @@ const Contact = () => {
   return (
     <div className="contact-page">
       <h1>Kontakt</h1>
+
       <div className="contact-container">
         <div className="contact-form-section">
           <h2>Schreiben Sie uns</h2>
 
           <form onSubmit={handleSubmit} className="contact-form">
-            {/* بدل تكرار label+input مرتين، نضعهما في مصفوفة ونرسمهما بـ map */}
-            {[
-              {
-                id: "name",
-                label: "Name",
-                type: "text",
-                placeholder: "Ihr Name",
-              },
-              {
-                id: "email",
-                label: "E-Mail",
-                type: "email",
-                placeholder: "ihre@email.de",
-              },
-            ].map((field) => (
-              <React.Fragment key={field.id}>
-                <label htmlFor={field.id}>{field.label}</label>
-                <input
-                  id={field.id}
-                  name={field.id}
-                  type={field.type}
-                  value={form[field.id]}
-                  onChange={handleChange}
-                  placeholder={field.placeholder}
-                  required
-                />
-              </React.Fragment>
-            ))}
+            <label htmlFor="name">Name</label>
+            <input
+              id="name"
+              type="text"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              placeholder="Ihr Name"
+            />
 
-            {/* قائمة الموضوعات — نضيف كلاس "selected" عند الاختيار للتنسيق */}
+            <label htmlFor="email">E-Mail</label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+              placeholder="ihre@email.de"
+            />
+
             <label htmlFor="subject">Betreff</label>
             <select
               id="subject"
@@ -111,50 +88,61 @@ const Contact = () => {
               <option value="" disabled>
                 Bitte wählen...
               </option>
-              {SUBJECTS.map(({ value, label }) => (
-                <option key={value} value={value}>
-                  {label}
-                </option>
-              ))}
+              <option value="allgemein">Allgemeine Anfrage</option>
+              <option value="angebot">Angebot anfordern</option>
+              <option value="beschwerde">Beschwerde</option>
+              <option value="sonstiges">Sonstiges</option>
             </select>
 
-            {/* placeholder يتغيّر حسب الموضوع المختار */}
             <label htmlFor="message">Nachricht</label>
             <textarea
               id="message"
               name="message"
               value={form.message}
               onChange={handleChange}
-              placeholder={PLACEHOLDERS[form.subject] || "Ihre Nachricht..."}
+              placeholder="Ihre Nachricht..."
               rows={5}
             />
 
-            {/* نُظهر رسالة الخطأ فقط إذا كان status.error غير فارغ */}
             {status.error && <p className="error-msg">{status.error}</p>}
-
-            {/* نُظهر رسالة النجاح فقط إذا كان status.success يساوي true */}
             {status.success && (
               <p className="success-msg">
                 ✅ Vielen Dank! Ihre Nachricht wurde gesendet.
               </p>
             )}
 
-            {/* الزر معطّل أثناء الإرسال لمنع النقر مرتين */}
             <button type="submit" disabled={status.loading}>
               {status.loading ? "Wird gesendet..." : "Nachricht senden"}
             </button>
           </form>
         </div>
 
-        {/* قسم المعلومات ثابت لا يحتاج state */}
         <div className="contact-info-section">
           <div className="contact-info">
             <h2>Unsere Kontaktdaten</h2>
-            <p>📍 Kettwiger Str. 10, 45127 Essen</p>
-            <p>📞 +49 91742239</p>
-            <p>✉️ info@cleanservice-essen.de</p>
-            <p>🕐 Mo–Fr: 08:00 – 15:00 Uhr</p>
+
+            <div className="info-item">
+              <span>📍</span>
+              <span>Kettwiger Str. 10, 45127 Essen</span>
+            </div>
+            <br />
+
+            <div className="info-item">
+              <span>📞</span>
+              <span>+49 91742239</span>
+            </div>
+            <br />
+            <div className="info-item">
+              <span>✉️</span>
+              <span>info@cleanservice-essen.de</span>
+            </div>
+            <br />
+            <div className="info-item">
+              <span>🕐</span>
+              <span>Mo–Fr: 08:00 – 15:00 Uhr</span>
+            </div>
           </div>
+
           <div className="contact-map">
             <iframe
               title="Standort Essen"
