@@ -51,12 +51,13 @@ app.post("/create-users-table", async (req, res) => {
 
 app.post("/bookings", async (req, res) => {
     try {
-        const { week, period } = req.body;
+        const { week, period, serviceId } = req.body;
 
         const booking = await prisma.booking.create({
             data: {
                 week,
                 period,
+                serviceId
             },
         });
 
