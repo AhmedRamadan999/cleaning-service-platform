@@ -36,7 +36,8 @@ export default function Service() {
             <h3>{service.title}</h3>
             <p>{service.desc}</p>
             <p className="price">Preis: {service.price} €</p>
-            <NavLink className= "book-btn" to="/booking" state={{service: service.title}}>Jetzt buchen</NavLink>
+            <NavLink className= "book-btn" to="/booking" state={{serviceId: service.id,serviceTitle: service.title
+            }}>Jetzt buchen</NavLink>
           </div>
         ))}
       </div>

@@ -7,7 +7,7 @@ import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Booking from "./pages/Booking";
-
+import Admin from "./pages/Admin";
 const App = () => {
   return (
     <Routes>
@@ -18,6 +18,7 @@ const App = () => {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="booking" element={<Booking />} />
+        <Route path="admin" element={<Admin />} />
       </Route>
     </Routes>
   );

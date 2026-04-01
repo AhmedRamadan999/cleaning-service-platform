@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import "../styles/booking.css"
+import "../styles/booking.css";
 const Booking = () => {
   const [week, setWeek] = useState("");
   const [period, setPeriod] = useState("");
@@ -10,7 +10,8 @@ const Booking = () => {
   const [error, setError] = useState("");
 
   const location = useLocation();
-  const selectedService = location.state?.service;
+  const selectedServiceId = location.state?.serviceId;
+  const selectedServiceTitle = location.state?.serviceTitle;
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (week === "" || period === "") {
@@ -22,6 +23,7 @@ const Booking = () => {
     const bookingData = {
       week,
       period,
+      serviceId: selectedServiceId,
     };
     const response = await fetch("http://localhost:3000/bookings", {
       method: "POST",
@@ -52,7 +54,9 @@ const Booking = () => {
   return (
     <>
       <h1>Termin buchen</h1>
-      {selectedService && <h3>Sie haben {selectedService} gewählt</h3>}
+      {selectedServiceTitle && (
+        <h3>Sie haben {selectedServiceTitle} gewählt</h3>
+      )}
       <div className="booking-wrapper">
         <form onSubmit={handleSubmit} className="booking-form">
           <input
