@@ -1,13 +1,14 @@
-/*
-  Warnings:
+-- CreateTable
+CREATE TABLE "Booking" (
+    "id" SERIAL NOT NULL,
+    "week" TEXT NOT NULL,
+    "period" TEXT NOT NULL,
+    "serviceId" INTEGER NOT NULL,
+    "status" TEXT NOT NULL DEFAULT 'pending',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-  - You are about to drop the column `service` on the `Booking` table. All the data in the column will be lost.
-  - Added the required column `serviceId` to the `Booking` table without a default value. This is not possible if the table is not empty.
-
-*/
--- AlterTable
-ALTER TABLE "Booking" DROP COLUMN "service",
-ADD COLUMN     "serviceId" INTEGER NOT NULL;
+    CONSTRAINT "Booking_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Service" (

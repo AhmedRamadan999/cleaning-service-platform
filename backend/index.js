@@ -70,6 +70,48 @@ app.post("/bookings", async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+app.get("/bookings", async (req, res) => {
+    try {
+        const bookings = await prisma.booking.findMany({
+            include: {
+                service: true,
+            },
+        });
+        res.json(bookings);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error.message});
+    }
+})
+
+
+
+app.put("/bookings/:id/status", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+
+
+        const updatedBooking = await prisma.booking.update({
+            where: {
+                id: Number(id),
+            },
+            data: {
+                status,
+            },
+
+        })
+        res.json({
+            message: "booking status updated",
+            booking: updatedBooking,
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
 
 app.listen(3000, () => {
     console.log("Server running on port 3000");
