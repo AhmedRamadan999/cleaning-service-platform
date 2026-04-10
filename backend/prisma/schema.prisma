@@ -12,6 +12,7 @@ model Booking {
   week      String
   period    String
   serviceId   Int
+  status    String   @default("pending")
   service   Service  @relation(fields: [serviceId], references: [id])
   createdAt DateTime @default(now())
 }
