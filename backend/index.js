@@ -80,7 +80,7 @@ app.get("/bookings", async (req, res) => {
         res.json(bookings);
     } catch (error) {
         console.log(error);
-        res.status(500).json({ error: error.message});
+        res.status(500).json({ error: error.message });
     }
 })
 
@@ -111,7 +111,23 @@ app.put("/bookings/:id/status", async (req, res) => {
     }
 });
 
-
+app.delete("/bookings/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedBooking = await prisma.booking.delete({
+            where: {
+                id: Number(id),
+            },
+        });
+        res.json({
+            message: "booking deleted",
+            booking: deletedBooking,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error.message });
+    }
+});
 
 app.listen(3000, () => {
     console.log("Server running on port 3000");

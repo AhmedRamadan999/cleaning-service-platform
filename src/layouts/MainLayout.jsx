@@ -1,7 +1,10 @@
-import { NavLink, Outlet } from "react-router-dom";
+
 import "../styles/navbar.css";
 import React from "react";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 const MainLayout = () => {
+  const location = useLocation();
+  const isAdminPage = location.pathname === "/admin";
   return (
     <>
       <nav-center className="navbar">
@@ -20,7 +23,7 @@ const MainLayout = () => {
         </div>
       </nav-center>
 
-      <main className="container">
+      <main className={isAdminPage ? "admin-main" : "container"}>
         <Outlet />
       </main>
     </>
