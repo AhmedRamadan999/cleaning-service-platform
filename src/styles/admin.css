@@ -1,0 +1,84 @@
+.admin-layout {
+    display: flex;
+}
+
+.admin-sidebar {
+    width: 220px;
+    min-height: 100vh;
+    background: #1f2937;
+    color: white;
+    padding: 20px;
+}
+.admin-content {
+    flex: 1;
+    padding: 20px;
+    
+}
+.admin-page {
+    width: 100%;
+}
+.admin-main {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.booking-card {
+    background: white;
+    color: black;
+    padding: 15px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 320px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.bookings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+.booking-card button {
+    margin-right: 8px;
+    margin-top: 10px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+
+}
+.booking-card button:nth-of-type(1) {
+    background: rgb(69, 207, 69);
+}
+.booking-card button:nth-of-type(2) {
+    background: red;
+}
+.booking-card button:nth-of-type(3) {
+    background: rgb(66, 66, 239);
+}
+.booking-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.status {
+    font-weight: bold;
+}
+
+.status.confirmed {
+    color: green;
+}
+
+.status.cancelled {
+    color: red;
+}
+
+.status.completed {
+    color: blue;
+}
+
+.status.pending {
+    color: orange;
+}
