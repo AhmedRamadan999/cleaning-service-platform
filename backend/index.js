@@ -129,6 +129,28 @@ app.delete("/bookings/:id", async (req, res) => {
     }
 });
 
+app.get("/services", async (req, res) => {
+    try {
+        const services = await prisma.service.findMany();
+        res.json(services)
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error.message });
+    }
+})
+
+app.post("/login", async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(400).json({ error: "Email and password are required" })
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 app.listen(3000, () => {
     console.log("Server running on port 3000");
 });
