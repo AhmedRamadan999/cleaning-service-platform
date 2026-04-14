@@ -1,24 +1,20 @@
-// استيراد React و useState لإدارة حالة النموذج
 import React, { useState } from "react";
 import "../styles/login.css";
 
 const Login = () => {
-  // حالة كل حقل في النموذج
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // دالة تسجيل الدخول
+  //  تسجيل الدخول
   const handleSubmit = async (e) => {
-    e.preventDefault(); // منع إعادة تحميل الصفحة
+    e.preventDefault();
 
-    // التحقق من الحقول
     if (!email || !password) {
       alert("Bitte füllen Sie alle Felder aus.");
       return;
     }
 
     try {
-      // إرسال البيانات إلى السيرفر
       const res = await fetch("http://localhost:3000/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -29,11 +25,11 @@ const Login = () => {
       if (!res.ok) throw new Error(data.error || "Anmeldung fehlgeschlagen.");
 
       alert("Erfolgreich angemeldet!");
-      // إفراغ النموذج بعد النجاح
+      // إفراغ النموذج
       setEmail("");
       setPassword("");
     } catch (err) {
-      alert(err.message); // عرض الخطأ
+      alert(err.message);
     }
   };
 
@@ -45,7 +41,6 @@ const Login = () => {
         <div className="login-form-section">
           <h2>Melden Sie sich an</h2>
           <form onSubmit={handleSubmit} className="login-form">
-            {/* حقل البريد — value يربطه بالحالة، onChange يحدّث الحالة عند الكتابة */}
             <label>E-Mail</label>
             <input
               type="email"
@@ -53,7 +48,6 @@ const Login = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
 
-            {/* حقل كلمة المرور */}
             <label>Passwort</label>
             <input
               type="password"
@@ -61,7 +55,6 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
 
-            {/* زر تسجيل الدخول */}
             <button type="submit">Anmelden</button>
           </form>
         </div>
