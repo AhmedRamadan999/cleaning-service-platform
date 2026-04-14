@@ -3,33 +3,35 @@ const express = require("express");
 const cors = require("cors");
 const { PrismaClient } = require("@prisma/client");
 const { Pool } = require("pg");
+const contactRoutes = require("./routes/contactRoutes");
 
 const app = express();
 
 const prisma = new PrismaClient();
 
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.DATABASE_URL,
 });
 
 app.use(cors());
 app.use(express.json());
+app.use("/contact", contactRoutes);
 
 app.get("/", (req, res) => {
-    res.send("Backend working ✅");
+  res.send("Backend working ✅");
 });
 
 app.post("/test", (req, res) => {
-    console.log(req.body);
-    res.json({
-        message: "Data received",
-        data: req.body,
-    });
+  console.log(req.body);
+  res.json({
+    message: "Data received",
+    data: req.body,
+  });
 });
 
 app.post("/create-users-table", async (req, res) => {
-    try {
-        const sql = `
+  try {
+    const sql = `
       CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
         first_name VARCHAR(255) NOT NULL,
@@ -40,79 +42,73 @@ app.post("/create-users-table", async (req, res) => {
       );
     `;
 
-        await pool.query(sql);
+    await pool.query(sql);
 
-        res.json({ message: "users table created successfully" });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: error.message });
-    }
+    res.json({ message: "users table created successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
+  }
 });
 
 app.post("/bookings", async (req, res) => {
-    try {
-        const { week, period, serviceId } = req.body;
+  try {
+    const { week, period, serviceId } = req.body;
 
-        const booking = await prisma.booking.create({
-            data: {
-                week,
-                period,
-                serviceId
-            },
-        });
+    const booking = await prisma.booking.create({
+      data: {
+        week,
+        period,
+        serviceId,
+      },
+    });
 
-        res.json({
-            message: "booking created",
-            booking,
-        });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: error.message });
-    }
+    res.json({
+      message: "booking created",
+      booking,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
+  }
 });
 app.get("/bookings", async (req, res) => {
-    try {
-        const bookings = await prisma.booking.findMany({
-            include: {
-                service: true,
-            },
-        });
-        res.json(bookings);
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: error.message});
-    }
-})
-
-
-
-app.put("/bookings/:id/status", async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { status } = req.body;
-
-
-        const updatedBooking = await prisma.booking.update({
-            where: {
-                id: Number(id),
-            },
-            data: {
-                status,
-            },
-
-        })
-        res.json({
-            message: "booking status updated",
-            booking: updatedBooking,
-        })
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: error.message });
-    }
+  try {
+    const bookings = await prisma.booking.findMany({
+      include: {
+        service: true,
+      },
+    });
+    res.json(bookings);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
+  }
 });
 
+app.put("/bookings/:id/status", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
 
+    const updatedBooking = await prisma.booking.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        status,
+      },
+    });
+    res.json({
+      message: "booking status updated",
+      booking: updatedBooking,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
+  }
+});
 
 app.listen(3000, () => {
-    console.log("Server running on port 3000");
+  console.log("Server running on port 3000");
 });
