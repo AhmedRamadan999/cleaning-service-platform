@@ -1,12 +1,13 @@
 // استيراد React و useState لإدارة حالة النموذج
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/login.css";
 
 const Login = () => {
   // حالة كل حقل في النموذج
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const navigate = useNavigate();
   // دالة تسجيل الدخول
   const handleSubmit = async (e) => {
     e.preventDefault(); // منع إعادة تحميل الصفحة
@@ -19,7 +20,7 @@ const Login = () => {
 
     try {
       // إرسال البيانات إلى السيرفر
-      const res = await fetch("http://localhost:3000/login", {
+      const res = await fetch("http://localhost:3000/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -27,7 +28,8 @@ const Login = () => {
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Anmeldung fehlgeschlagen.");
-
+      localStorage.setItem("token", data.token);
+      navigate("/admin");
       alert("Erfolgreich angemeldet!");
       // إفراغ النموذج بعد النجاح
       setEmail("");

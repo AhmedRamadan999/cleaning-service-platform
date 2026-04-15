@@ -7,7 +7,10 @@ import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Booking from "./pages/Booking";
-import Admin from "./pages/Admin";
+import AdminLayout from "./admins/AdminLayout";
+import AdminBookings from "./admins/AdminBookings";
+import AdminServices from "./admins/AdminServices";
+
 const App = () => {
   return (
     <Routes>
@@ -18,7 +21,11 @@ const App = () => {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="booking" element={<Booking />} />
-        <Route path="admin" element={<Admin />} />
+        <Route path="admin" element={<AdminLayout />}>
+        <Route index element={AdminBookings} />
+          <Route path="bookings" element={<AdminBookings />} />
+          <Route path="services" element={<AdminServices />} />
+        </Route>
       </Route>
     </Routes>
   );
