@@ -1,10 +1,9 @@
-
 import "../styles/navbar.css";
 import React from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 const MainLayout = () => {
   const location = useLocation();
-  const isAdminPage = location.pathname === "/admin";
+  const isAdminPage = location.pathname.startsWith("/admin");
   return (
     <>
       <nav-center className="navbar">
