@@ -1,0 +1,176 @@
+/* ============ Base ============ */
+.about-page {
+  background-color: #0d0d0d;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  padding-bottom: 80px;
+  width: 1129px;
+}
+
+.about-page > h1 {
+  font-size: 4rem;
+  color: #ffffff;
+  text-align: center;
+  padding: 80px 40px 16px;
+}
+
+.about-page h2 {
+  font-size: 2.5rem;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.about-page section {
+  padding: 60px;
+}
+
+/* كرت قياسي (نستخدمه لكل الكروت) */
+.about-card {
+  background-color: #1a1a1a;
+  border: 1px solid #333333;
+  border-radius: 18px;
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.about-card:hover {
+  border-color: #f5c518;
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: #cccccc;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* زر قياسي */
+.btn-yellow {
+  display: inline-block;
+  font-size: 1.1rem;
+  color: #0d0d0d;
+  background-color: #f5c518;
+  border-radius: 12px;
+  padding: 18px 32px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.btn-yellow:hover {
+  background-color: #ffd633;
+}
+
+.btn-outline {
+  display: inline-block;
+  font-size: 1.1rem;
+  color: #f5c518;
+  background-color: transparent;
+  border: 2px solid #f5c518;
+  border-radius: 12px;
+  padding: 16px 32px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.btn-outline:hover {
+  background-color: #f5c518;
+  color: #0d0d0d;
+}
+
+/* ============ Hero ============ */
+.about-hero {
+  text-align: center;
+  padding: 20px 60px 80px;
+}
+.about-hero p {
+  font-size: 1.3rem;
+  color: #cccccc;
+  margin-bottom: 40px;
+}
+
+/* ============ Story ============ */
+.about-story-container {
+  display: flex;
+  gap: 40px;
+  align-items: stretch;
+}
+.about-story-text {
+  flex: 1;
+}
+.about-story-text p {
+  color: #ffffff;
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+.about-story-text strong {
+  color: #f5c518;
+}
+.about-story-image {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+.about-story-image span {
+  font-size: 8rem;
+}
+
+/* ============ Grids ============ */
+.values-grid,
+.why-us-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* نصوص داخل الكروت */
+.about-card h3 {
+  font-size: 1.3rem;
+  color: #f5c518;
+  margin-bottom: 12px;
+}
+.about-card p {
+  font-size: 0.95rem;
+  color: #cccccc;
+  line-height: 1.6;
+}
+
+.value-icon,
+.team-avatar {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+.why-us-number {
+  font-size: 3rem !important;
+}
+
+.team-card h3 {
+  color: #ffffff !important;
+}
+.team-role {
+  color: #f5c518;
+  text-transform: uppercase;
+  font-size: 0.9rem !important;
+}
+
+/* ============ CTA ============ */
+.about-cta {
+  margin: 0 60px;
+}
+.about-cta p {
+  font-size: 1.1rem;
+  color: #cccccc;
+  margin-bottom: 40px;
+}
+.about-cta-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}

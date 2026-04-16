@@ -10,6 +10,7 @@ import Booking from "./pages/Booking";
 import AdminLayout from "./admins/AdminLayout";
 import AdminBookings from "./admins/AdminBookings";
 import AdminServices from "./admins/AdminServices";
+import About from "./pages/About";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="booking" element={<Booking />} />
+        <Route path="about" element={<About />} />
         <Route path="admin" element={<AdminLayout />}>
           <Route index element={<AdminBookings />} />
           <Route path="bookings" element={<AdminBookings />} />
