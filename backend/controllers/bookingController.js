@@ -1,11 +1,11 @@
-const {PrismaClient} = require("@prisma/client");
+const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
 
 const createBooking = async (req, res) => {
     try {
-        const {week, period, serviceId} = req.body;
+        const { week, period, serviceId } = req.body;
 
         const booking = await prisma.booking.create({
             data: {
@@ -14,7 +14,7 @@ const createBooking = async (req, res) => {
                 serviceId,
             },
         });
-        
+
         res.json({
             message: "booking created",
             booking,
@@ -22,22 +22,22 @@ const createBooking = async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        res.status(500).json({error: error.message});
+        res.status(500).json({ error: error.message });
     }
 };
 
 const getBookings = async (req, res) => {
-   try {
-    const bookings = await prisma.booking.findMany({
-        include: {
-            service: true,
-        },
-    });
-    res.json(bookings);
-   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: error.message})
-   }
+    try {
+        const bookings = await prisma.booking.findMany({
+            include: {
+                service: true,
+            },
+        });
+        res.json(bookings);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error.message })
+    }
 };
 const updateBookingStatus = async (req, res) => {
     try {
