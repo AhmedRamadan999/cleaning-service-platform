@@ -10,14 +10,17 @@
     color: white;
     padding: 20px;
 }
+
 .admin-content {
     flex: 1;
     padding: 20px;
     min-width: 0;
 }
+
 .admin-page {
     width: 100%;
 }
+
 .admin-main {
     width: 100%;
     max-width: 100%;
@@ -34,11 +37,13 @@
     max-width: 320px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
+
 .bookings-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 20px;
 }
+
 .booking-card button {
     margin-right: 8px;
     margin-top: 10px;
@@ -48,15 +53,19 @@
     cursor: pointer;
 
 }
+
 .booking-card button:nth-of-type(1) {
-    background: rgb(69, 207, 69);
+    background: rgba(234, 5, 5, 0.781);
 }
+
 .booking-card button:nth-of-type(2) {
     background: red;
 }
+
 .booking-card button:nth-of-type(3) {
     background: rgb(66, 66, 239);
 }
+
 .booking-actions {
     display: flex;
     gap: 10px;
@@ -83,6 +92,7 @@
 .status.pending {
     color: orange;
 }
+
 .admin-sidebar a {
     display: block;
     color: white;
@@ -95,16 +105,19 @@
 .admin-sidebar a:hover {
     color: #38bdf8;
 }
-.admin-sidebar a.active{
+
+.admin-sidebar a.active {
     background: rgba(255, 255, 255, 0.12);
     color: #38bdf8;
 }
+
 .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 20px;
     margin-top: 20px;
 }
+
 .service-card {
     background: white;
     color: black;
@@ -116,4 +129,68 @@
 
 body {
     overflow-y: scroll;
+}
+
+.service-actions {
+    margin-top: 12px;
+}
+
+.service-actions select {
+    padding: 8px 10px;
+    border-radius: 6px;
+}
+
+.service-card input,
+.service-card textarea,
+.service-card select {
+    width: 100%;
+    margin-top: 10px;
+    padding: 8px 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.service-card textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.service-card button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #1f2937;
+    color: white;
+}
+
+.service-card button:hover {
+    opacity: 0.9;
+}
+
+.service-card h3 {
+    margin-bottom: 8px;
+}
+
+.service-card p {
+    margin: 6px 0;
+}
+
+.booking-actions select {
+    padding: 8px 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: white;
+}
+
+.booking-actions button {
+    background: #dc2626;
+    color: white;
+}
+
+.booking-actions button:hover {
+    opacity: 0.9;
 }

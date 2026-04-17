@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import "../styles/admin.css";
 import React from "react";
@@ -48,7 +47,7 @@ const AdminBookings = () => {
       <div className="bookings-grid">
         {bookings.map((booking) => (
           <div key={booking.id} className="booking-card">
-            <h3>{booking.service.title}</h3>
+            <h3>{booking.service?.title || "No Service found"}</h3>
             <p>Week: {booking.week}</p>
             <p>Period: {booking.period}</p>
             <p className={`status ${booking.status}`}>
@@ -56,21 +55,19 @@ const AdminBookings = () => {
             </p>
 
             <div className="booking-actions">
-              <button onClick={() => updateBookingStatus(booking.id, "confirmed")}>
-                Confirm
-              </button>
+              <select
+                value={booking.status}
+                onChange={(e) =>
+                  updateBookingStatus(booking.id, e.target.value)
+                }
+              >
+                <option value="pending">Pending</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="cancelled">Cancelled</option>
+                <option value="completed">Completed</option>
+              </select>
 
-              <button onClick={() => updateBookingStatus(booking.id, "cancelled")}>
-                Cancel
-              </button>
-
-              <button onClick={() => updateBookingStatus(booking.id, "completed")}>
-                Completed
-              </button>
-
-              <button onClick={() => deleteBooking(booking.id)}>
-                Delete
-              </button>
+              <button onClick={() => deleteBooking(booking.id)}>Delete</button>
             </div>
           </div>
         ))}
