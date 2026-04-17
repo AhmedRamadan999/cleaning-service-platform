@@ -1,21 +1,101 @@
-.booking-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
+.booking-page {
+    min-height: 100vh;
+    padding: 40px 20px;
+
+}
+
+.booking-container {
+    max-width: 700px;
+    margin: 0 auto;
+    background: rgb(0, 0, 0);
+    padding: 32px;
+    border-radius: 18px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+}
+
+.booking-container h1 {
+    margin-bottom: 18px;
+    color: #feffff;
+}
+
+.selected-service {
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #ffffff;
+    background: #000000;
+    padding: 12px 14px;
+    border-radius: 10px;
 }
 
 .booking-form {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #fbfbfd;
 }
 
 .booking-form input,
-.booking-form select,
+.booking-form select {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.booking-form input:focus,
+.booking-form select:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
 .booking-form button {
-    padding: 10px 14px;
-    height: 42px;
-    border-radius: 8px;
+    margin-top: 6px;
+    padding: 12px 14px;
+    border: none;
+    border-radius: 10px;
+    background: #1f2937;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.booking-form button:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+}
+
+.booking-preview {
+    margin-top: 20px;
+    color: #374151;
+    background: #f9fafb;
+    padding: 12px 14px;
+    border-radius: 10px;
+}
+
+.booking-error {
+    margin-top: 14px;
+    color: #b91c1c;
+    background: #fee2e2;
+    padding: 12px 14px;
+    border-radius: 10px;
+}
+
+.booking-success {
+    margin-top: 14px;
+    color: #166534;
+    background: #dcfce7;
+    padding: 12px 14px;
+    border-radius: 10px;
 }

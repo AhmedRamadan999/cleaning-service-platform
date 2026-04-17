@@ -73,10 +73,31 @@ const updateService = async (req,res) => {
         res.status(500).json({ error: error.message})
     }
 }
+const createService = async (req, res) => {
+    try {
+        const {title, desc, price} = req.body;
+        const newService = await prisma.service.create({
+            data: {
+                title,
+                desc,
+                price: Number(price),
+            },
+        });
+
+        res.json({
+            message: "service created",
+            service: newService,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error.message});
+    }
+};
 module.exports = {
     getServices,
     getActiveServices,
     updateServiceStatus,
     updateService,
+    createService,
 
 }

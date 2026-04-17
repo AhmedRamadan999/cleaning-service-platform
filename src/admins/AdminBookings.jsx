@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "../styles/admin.css";
 import React from "react";
+import BookingCard from "./BookingCard";
 const AdminBookings = () => {
   const [bookings, setBookings] = useState([]);
 
@@ -46,30 +47,12 @@ const AdminBookings = () => {
       <h2 id="bookings-section">Bookings</h2>
       <div className="bookings-grid">
         {bookings.map((booking) => (
-          <div key={booking.id} className="booking-card">
-            <h3>{booking.service?.title || "No Service found"}</h3>
-            <p>Week: {booking.week}</p>
-            <p>Period: {booking.period}</p>
-            <p className={`status ${booking.status}`}>
-              Status: {booking.status}
-            </p>
-
-            <div className="booking-actions">
-              <select
-                value={booking.status}
-                onChange={(e) =>
-                  updateBookingStatus(booking.id, e.target.value)
-                }
-              >
-                <option value="pending">Pending</option>
-                <option value="confirmed">Confirmed</option>
-                <option value="cancelled">Cancelled</option>
-                <option value="completed">Completed</option>
-              </select>
-
-              <button onClick={() => deleteBooking(booking.id)}>Delete</button>
-            </div>
-          </div>
+          <BookingCard
+            key={booking.id}
+            booking={booking}
+            updateBookingStatus={updateBookingStatus}
+            deleteBooking={deleteBooking}
+          />
         ))}
       </div>
     </>

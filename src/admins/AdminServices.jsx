@@ -1,10 +1,15 @@
 import { useState, useEffect } from "react";
 import "../styles/admin.css";
 import React from "react";
-
+import ServiceCard from "./ServiceCard";
 const AdminServices = () => {
   const [services, setServices] = useState([]);
   const [editingServiceId, setEditingServiceId] = useState(null);
+  const [newService, setNewService] = useState({
+    title: "",
+    desc: "",
+    price: "",
+  });
   const [editedService, setEditedService] = useState({
     title: "",
     desc: "",
@@ -57,72 +62,68 @@ const AdminServices = () => {
     });
   };
 
+  const createService = () => {
+    fetch("http://localhost:3000/services", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: newService.title,
+        desc: newService.desc,
+        price: newService.price,
+      }),
+    }).then(() => {
+      fetchServices();
+      setNewService({
+        title: "",
+        desc: "",
+        price: "",
+      });
+    });
+  };
+
+
+
+
+
   return (
     <>
       <h2>Services</h2>
       <div className="services-grid">
+        <h3 className="Services-adress">Add New Service</h3>
+
+        <input type="text" 
+        placeholder="Title"
+        value={newService.title}
+        onChange={(e) => 
+          setNewService({ ...newService, title: e.target.value})
+        }/>
+        <textarea placeholder="Description"
+        value={newService.desc}
+        onChange={(e) => 
+          setNewService({ ...newService, desc: e.target.value})
+        }></textarea>
+        <input type="number"
+        placeholder="Price"
+        value={newService.price}
+        onChange={(e) => 
+          setNewService({ ...newService, price: e.target.value})
+        } />
+
+        <button className="add-service-btn" onClick={createService}>Add Service</button>
+
         {services.map((service) => (
-          <div key={service.id} className="service-card">
-            {editingServiceId === service.id ? (
-              <input
-                type="text"
-                value={editedService.title}
-                onChange={(e) =>
-                  setEditedService({ ...editedService, title: e.target.value })
-                }
-              />
-            ) : (
-              <h3>{service.title}</h3>
-            )}
-
-            {editingServiceId === service.id ? (
-              <textarea
-                value={editedService.desc}
-                onChange={(e) =>
-                  setEditedService({ ...editedService, desc: e.target.value })
-                }
-              ></textarea>
-            ) : (
-              <p>{service.desc}</p>
-            )}
-
-            {editingServiceId === service.id ? (
-              <input
-                type="number"
-                value={editedService.price}
-                onChange={(e) =>
-                  setEditedService({ ...editedService, price: e.target.value })
-                }
-              />
-            ) : (
-              <p>Price: {service.price} €</p>
-            )}
-
-            <select
-              value={service.isActive ? "active" : "inactive"}
-              onChange={(e) =>
-                updateServiceStatus(service.id, e.target.value === "active")
-              }
-            >
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-            </select>
-
-            {editingServiceId === service.id ? (
-              <button onClick={() => saveEditedService(service.id)}>
-                Save
-              </button>
-            ) : (
-              <button onClick={() => {
-                setEditingServiceId(service.id);
-                setEditedService({
-                  title: service.title,
-                  desc: service.desc,
-                  price: service.price,
-                })
-              }}> Edit</button>
-            )}
-          </div>
+          <ServiceCard
+            key={service.id}
+            service={service}
+            editingServiceId={editingServiceId}
+            setEditingServiceId={setEditingServiceId}
+            editedService={editedService}
+            setEditedService={setEditedService}
+            updateServiceStatus={updateServiceStatus}
+            saveEditedService={saveEditedService}
+          />
         ))}
       </div>
     </>
