@@ -2,29 +2,36 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "../styles/booking.css";
+
 const Booking = () => {
   const [week, setWeek] = useState("");
   const [period, setPeriod] = useState("");
   const [success, setSuccess] = useState(false);
-  const isValid = week !== "" && period !== "";
   const [error, setError] = useState("");
+
+  const isValid = week !== "" && period !== "";
 
   const location = useLocation();
   const selectedServiceId = location.state?.serviceId;
   const selectedServiceTitle = location.state?.serviceTitle;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (week === "" || period === "") {
       setError("Bitte wählen Sie eine Woche und einen Zeitraum aus.");
       return;
     }
+
     setError("");
     setSuccess(false);
+
     const bookingData = {
       week,
       period,
       serviceId: selectedServiceId,
     };
+
     const response = await fetch("http://localhost:3000/bookings", {
       method: "POST",
       headers: {
@@ -47,50 +54,63 @@ const Booking = () => {
       const timer = setTimeout(() => {
         setSuccess(false);
       }, 4000);
+
       return () => clearTimeout(timer);
     }
   }, [success]);
 
   return (
-    <>
-      <h1>Termin buchen</h1>
-      {selectedServiceTitle && (
-        <h3>Sie haben {selectedServiceTitle} gewählt</h3>
-      )}
-      <div className="booking-wrapper">
-        <form onSubmit={handleSubmit} className="booking-form">
-          <input
-            type="week"
-            value={week}
-            onChange={(e) => setWeek(e.target.value)}
-          />
+    <div className="booking-page">
+      <div className="booking-container">
+        <h1>Termin buchen</h1>
 
-          <select value={period} onChange={(e) => setPeriod(e.target.value)}>
-            <option value="">Bitte auswählen…</option>
-            <option value="Vormittag">Vormittag</option>
-            <option value="Nachmittag">Nachmittag</option>
-          </select>
+        {selectedServiceTitle && (
+          <p className="selected-service">
+            Gewählter Service: <strong>{selectedServiceTitle}</strong>
+          </p>
+        )}
+
+        <form onSubmit={handleSubmit} className="booking-form">
+          <div className="form-group">
+            <label>Woche</label>
+            <input
+              type="week"
+              value={week}
+              onChange={(e) => setWeek(e.target.value)}
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Zeitraum</label>
+            <select value={period} onChange={(e) => setPeriod(e.target.value)}>
+              <option value="">Bitte auswählen…</option>
+              <option value="Vormittag">Vormittag</option>
+              <option value="Nachmittag">Nachmittag</option>
+            </select>
+          </div>
 
           <button type="submit" disabled={!isValid}>
             Absenden
           </button>
         </form>
+
+        {week && period && (
+          <p className="booking-preview">
+            Sie haben <strong>{week}</strong> - <strong>{period}</strong>{" "}
+            gewählt.
+          </p>
+        )}
+
+        {error && <p className="booking-error">{error}</p>}
+
+        {success && (
+          <p className="booking-success">
+            ✅ Vielen Dank! Ihre Terminanfrage wurde gesendet. Wir kontaktieren
+            Sie in Kürze.
+          </p>
+        )}
       </div>
-      {week && period && (
-        <p>
-          Sie haben {week} - {period} gewählt.
-        </p>
-      )}
-
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      {success && (
-        <p>
-          ✅ Vielen Dank! Ihre Terminanfrage wurde gesendet. Wir kontaktieren
-          Sie in Kürze.
-        </p>
-      )}
-    </>
+    </div>
   );
 };
 

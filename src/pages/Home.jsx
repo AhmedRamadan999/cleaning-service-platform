@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "../styles/home.css";
-import cleaningImg from "../assets/cleaning-bg2.jpg";
+import pexels from "../assets/pexels.jpg";
 import { Link } from "react-router-dom";
+
 const Home = () => {
   const [rating, setRating] = useState(0);
   const [reviews, setReviews] = useState([]);
@@ -29,12 +30,11 @@ const Home = () => {
       <div className="home-content">
         {/* HERO */}
         <section className="hero">
-          <img src={cleaningImg} alt="cleaning" />
+          <img src={pexels} alt="cleaning" />
           <div className="hero-text">
             <h1>Professional Cleaning Service</h1>
-            <p>Sauberkeit und Qualität für Ihr Zuhause</p>
-            <Link to="/booking" className="btn">
-              Jetzt Termin buchen
+            <Link to="/services" className="btn">
+              Jetzt Service wählen
             </Link>
           </div>
         </section>
@@ -68,12 +68,12 @@ const Home = () => {
           <div className="before-after-grid">
             <div className="box">
               <h4>Vorher</h4>
-              <img src="/before.jpg" />
+              <img src="/src/assets/before_room.png" />
             </div>
 
             <div className="box">
               <h4>Nachher</h4>
-              <img src="/after.jpg" />
+              <img src="/src/assets/after_room.png" />
             </div>
           </div>
         </section>
@@ -114,24 +114,20 @@ const Home = () => {
             </div>
 
             <div className="member">
-              <img src="/ahmed.jpg" />
+              <img src="/src/assets/Ahmed.jpeg" />
               <h3>Ahmed</h3>
               <p className="role">Chef</p>
+              <p>⭐⭐⭐⭐⭐</p>
+            </div>
+            <div className="member">
+              <img src="mohammed.jpg" />
+              <h3>Mohammed</h3>
+              <p className="role">Project Managment</p>
               <p>⭐⭐⭐⭐⭐</p>
             </div>
           </div>
         </section>
       </div>
-
-      {/* SIDEBAR AD */}
-      <aside className="sidebar">
-        <div className="ad">
-          <h3>Anzeige</h3>
-          <img src="/ad-cleaning.jpg2" />
-          <p>Beste Reinigungsprodukte</p>
-          <button>Mehr erfahren</button>
-        </div>
-      </aside>
     </div>
   );
 };
