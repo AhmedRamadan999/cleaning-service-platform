@@ -131,6 +131,66 @@
   width: 100%;
   border-radius: 10px;
 }
+
 .services h2 {
   margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .home-layout {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .hero {
+    height: 45vh;
+  }
+
+  .hero-text {
+    width: 90%;
+  }
+
+  .services {
+    padding: 30px 20px;
+  }
+
+  .services-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .service-card {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .before-after {
+    padding: 30px 20px;
+  }
+
+  .before-after-grid {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .box img {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .team {
+    padding: 30px 20px;
+  }
+
+  .team-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+  }
+
+  .ad {
+    position: static;
+    top: auto;
+  }
 }
