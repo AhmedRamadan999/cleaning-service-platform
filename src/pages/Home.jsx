@@ -111,23 +111,11 @@ const Home = () => {
           <h2>Unser Team</h2>
 
           <div className="team-container">
-            <div className="member">
-              <img src={issaImg} alt="Issa" />
-              <h3>Issa Hamadi</h3>
-              <p className="role">Teamleiter</p>
-              <p>⭐⭐⭐⭐⭐</p>
-            </div>
 
             <div className="member">
               <img src={ahmedImg} alt="Ahmed" />
               <h3>Ahmed</h3>
               <p className="role">Chef</p>
-              <p>⭐⭐⭐⭐⭐</p>
-            </div>
-            <div className="member">
-              <img src={mohammedImg} alt="Mohammed" />
-              <h3>Mohammed</h3>
-              <p className="role">Project Managment</p>
               <p>⭐⭐⭐⭐⭐</p>
             </div>
           </div>
