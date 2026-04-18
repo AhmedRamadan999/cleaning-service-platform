@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "../styles/booking.css";
 
+
+const API_URL = import.meta.env.VITE_API_URL;
 const Booking = () => {
   const [week, setWeek] = useState("");
   const [period, setPeriod] = useState("");
@@ -32,7 +34,7 @@ const Booking = () => {
       serviceId: selectedServiceId,
     };
 
-    const response = await fetch("http://localhost:3000/bookings", {
+    const response = await fetch(`${API_URL}/bookings`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
