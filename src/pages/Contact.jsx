@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import "../styles/contact.css";
+import "../styles/Contact.css";
 
 const INITIAL_FORM_STATE = { name: "", email: "", subject: "", message: "" };
 const INITIAL_STATUS = { loading: false, error: "", success: false };
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Contact = () => {
   const [form, setForm] = useState(INITIAL_FORM_STATE);
@@ -29,8 +30,6 @@ const Contact = () => {
 
     try {
       setStatus({ ...INITIAL_STATUS, loading: true });
-
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
       const res = await fetch(`${API_URL}/contact`, {
         method: "POST",
@@ -132,11 +131,13 @@ const Contact = () => {
               <span>+49 91742239</span>
             </div>
             <br />
+
             <div className="info-item">
               <span>✉️</span>
               <span>info@cleanservice-essen.de</span>
             </div>
             <br />
+
             <div className="info-item">
               <span>🕐</span>
               <span>Mo–Fr: 08:00 – 15:00 Uhr</span>

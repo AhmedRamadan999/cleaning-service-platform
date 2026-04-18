@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import "../styles/admin.css";
 import React from "react";
 import ServiceCard from "./ServiceCard";
+
+const API_URL = import.meta.env.VITE_API_URL;
+
 const AdminServices = () => {
   const [services, setServices] = useState([]);
   const [editingServiceId, setEditingServiceId] = useState(null);
@@ -17,7 +20,7 @@ const AdminServices = () => {
   });
 
   const fetchServices = () => {
-    fetch("http://localhost:3000/services")
+    fetch(`${API_URL}/services`)
       .then((res) => res.json())
       .then((data) => {
         setServices(data);
@@ -32,7 +35,7 @@ const AdminServices = () => {
   }, []);
 
   const updateServiceStatus = (id, newStatus) => {
-    fetch(`http://localhost:3000/services/${id}/status`, {
+    fetch(`${API_URL}/services/${id}/status`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -46,7 +49,7 @@ const AdminServices = () => {
   };
 
   const saveEditedService = (id) => {
-    fetch(`http://localhost:3000/services/${id}`, {
+    fetch(`${API_URL}/services/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -63,7 +66,7 @@ const AdminServices = () => {
   };
 
   const createService = () => {
-    fetch("http://localhost:3000/services", {
+    fetch(`${API_URL}/services`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -83,35 +86,41 @@ const AdminServices = () => {
     });
   };
 
-
-
-
-
   return (
     <>
       <h2>Services</h2>
       <div className="services-grid">
         <h3 className="Services-adress">Add New Service</h3>
 
-        <input type="text" 
-        placeholder="Title"
-        value={newService.title}
-        onChange={(e) => 
-          setNewService({ ...newService, title: e.target.value})
-        }/>
-        <textarea placeholder="Description"
-        value={newService.desc}
-        onChange={(e) => 
-          setNewService({ ...newService, desc: e.target.value})
-        }></textarea>
-        <input type="number"
-        placeholder="Price"
-        value={newService.price}
-        onChange={(e) => 
-          setNewService({ ...newService, price: e.target.value})
-        } />
+        <input
+          type="text"
+          placeholder="Title"
+          value={newService.title}
+          onChange={(e) =>
+            setNewService({ ...newService, title: e.target.value })
+          }
+        />
 
-        <button className="add-service-btn" onClick={createService}>Add Service</button>
+        <textarea
+          placeholder="Description"
+          value={newService.desc}
+          onChange={(e) =>
+            setNewService({ ...newService, desc: e.target.value })
+          }
+        ></textarea>
+
+        <input
+          type="number"
+          placeholder="Price"
+          value={newService.price}
+          onChange={(e) =>
+            setNewService({ ...newService, price: e.target.value })
+          }
+        />
+
+        <button className="add-service-btn" onClick={createService}>
+          Add Service
+        </button>
 
         {services.map((service) => (
           <ServiceCard

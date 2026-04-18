@@ -27,9 +27,9 @@ export default function Services() {
   //   },
   // ];
   const [services, setServices] = useState([]);
-
+const API_URL = import.meta.env.VITE_API_URL;
   const fetchServices = () => {
-    fetch("http://localhost:3000/services/active")
+    fetch(`${API_URL}/services/active`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);

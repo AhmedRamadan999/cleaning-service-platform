@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import "../styles/admin.css";
 import React from "react";
 import BookingCard from "./BookingCard";
+
 const AdminBookings = () => {
   const [bookings, setBookings] = useState([]);
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const fetchBookings = () => {
-    fetch("http://localhost:3000/bookings")
+    fetch(`${API_URL}/bookings`)
       .then((res) => res.json())
       .then((data) => {
         setBookings(data);
@@ -17,7 +19,7 @@ const AdminBookings = () => {
   };
 
   const updateBookingStatus = (id, newStatus) => {
-    fetch(`http://localhost:3000/bookings/${id}/status`, {
+    fetch(`${API_URL}/bookings/${id}/status`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -31,7 +33,7 @@ const AdminBookings = () => {
   };
 
   const deleteBooking = (id) => {
-    fetch(`http://localhost:3000/bookings/${id}`, {
+    fetch(`${API_URL}/bookings/${id}`, {
       method: "DELETE",
     }).then(() => {
       fetchBookings();
