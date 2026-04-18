@@ -11,7 +11,7 @@ const MainLayout = () => {
         <div className="links">
           <NavLink to="/">Home</NavLink>
           <NavLink to="/services">Services</NavLink>
-          <NavLink to="/contact">Contact</NavLink>
+          <NavLink to="/contact">Kontakt</NavLink>
           {/* <NavLink to="/booking">Booking</NavLink> */}
           <NavLink to="/about">Über uns</NavLink>
         </div>
