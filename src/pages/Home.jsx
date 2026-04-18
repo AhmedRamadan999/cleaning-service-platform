@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import "../styles/home.css";
 import pexels from "../assets/pexels.jpg";
+import beforeRoom from "../assets/before_room.png";
+import afterRoom from "../assets/after_room.png";
+import ahmedImg from "../assets/Ahmed.jpeg";
+import issaImg from "../assets/issa.jpg";
+import mohammedImg from "../assets/mohammed.jpg";
 import { Link } from "react-router-dom";
 
 const Home = () => {
@@ -68,12 +73,12 @@ const Home = () => {
           <div className="before-after-grid">
             <div className="box">
               <h4>Vorher</h4>
-              <img src="/src/assets/before_room.png" />
+              <img src={beforeRoom} alt="Before rom" />
             </div>
 
             <div className="box">
               <h4>Nachher</h4>
-              <img src="/src/assets/after_room.png" />
+              <img src={afterRoom} alt="After rom" />
             </div>
           </div>
         </section>
@@ -107,20 +112,20 @@ const Home = () => {
 
           <div className="team-container">
             <div className="member">
-              <img src="/issa.jpg" />
+              <img src={issaImg} alt="Issa" />
               <h3>Issa Hamadi</h3>
               <p className="role">Teamleiter</p>
               <p>⭐⭐⭐⭐⭐</p>
             </div>
 
             <div className="member">
-              <img src="/src/assets/Ahmed.jpeg" />
+              <img src={ahmedImg} alt="Ahmed" />
               <h3>Ahmed</h3>
               <p className="role">Chef</p>
               <p>⭐⭐⭐⭐⭐</p>
             </div>
             <div className="member">
-              <img src="mohammed.jpg" />
+              <img src={mohammedImg} alt="Mohammed" />
               <h3>Mohammed</h3>
               <p className="role">Project Managment</p>
               <p>⭐⭐⭐⭐⭐</p>
