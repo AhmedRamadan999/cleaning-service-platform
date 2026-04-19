@@ -9,6 +9,18 @@
     background: #1f2937;
     color: white;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-sidebar button {
+    margin-top: auto;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 8px;
+    background: rgb(255, 38, 0);
+    color: white;
+    cursor: pointer;
 }
 
 .admin-content {
