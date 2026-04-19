@@ -1,8 +1,11 @@
 import "../styles/navbar.css";
 import React from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+
 const MainLayout = () => {
   const location = useLocation();
+  const {token, role, logout} = useAuth();
   const isAdminPage = location.pathname.startsWith("/admin");
   return (
     <>
@@ -17,8 +20,17 @@ const MainLayout = () => {
         </div>
         <div className="links">
           <nav-right>
+            {!token ? (
+            <>
             <NavLink to="/register">Register</NavLink>
             <NavLink to="/login">Login</NavLink>
+            </>
+            ) : (
+              <>
+              {role === "admin" && <NavLink to="/admin">Dashboard</NavLink>}
+              <button onClick={logout} className="logout-btn">Logout</button>
+              </>
+            )}
           </nav-right>
         </div>
       </nav-center>
