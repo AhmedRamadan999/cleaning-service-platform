@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/login.css";
-import Register from "./Register";
-
+import { useAuth } from "../context/AuthContext";
 const API_URL = import.meta.env.VITE_API_URL;
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const {login} = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,8 +26,7 @@ const Login = () => {
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Anmeldung fehlgeschlagen.");
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("role", data.user.role);
+      login(data.token, data.user.role)
       if (data.user.role === "admin") {
         navigate("/admin");
       } else {

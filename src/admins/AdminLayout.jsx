@@ -1,10 +1,9 @@
 import React from "react";
 import { Navigate, NavLink, Outlet } from "react-router-dom";
 import "../styles/admin.css";
-
+import { useAuth } from "../context/AuthContext";
 const AdminLayout = () => {
-  const token = localStorage.getItem("token");
-  const role = localStorage.getItem("role");
+  const { token, role, logout } = useAuth();
 
   if (!token) {
     return <Navigate to="/login" />;
@@ -19,6 +18,7 @@ const AdminLayout = () => {
         <NavLink to="/admin">Dashboard</NavLink>
         <NavLink to="/admin/bookings">Bookings</NavLink>
         <NavLink to="/admin/services">Services</NavLink>
+        <button onClick={logout}>Logout</button>
       </div>
 
       <div className="admin-content">
