@@ -1,13 +1,9 @@
 /* ============ Base ============ */
 .about-page {
-  background-color: #0d0d0d;
-  font-family: Arial, sans-serif;
-  min-height: 100vh;
   padding-bottom: 80px;
-  width: 1129px;
 }
 
-.about-page > h1 {
+.about-page>h1 {
   font-size: 4rem;
   color: #ffffff;
   text-align: center;
@@ -83,6 +79,7 @@
   text-align: center;
   padding: 20px 60px 80px;
 }
+
 .about-hero p {
   font-size: 1.3rem;
   color: #cccccc;
@@ -95,17 +92,21 @@
   gap: 40px;
   align-items: stretch;
 }
+
 .about-story-text {
   flex: 1;
 }
+
 .about-story-text p {
   color: #ffffff;
   line-height: 1.8;
   margin-bottom: 16px;
 }
+
 .about-story-text strong {
   color: #f5c518;
 }
+
 .about-story-image {
   flex: 1;
   display: flex;
@@ -113,6 +114,7 @@
   justify-content: center;
   padding: 40px;
 }
+
 .about-story-image span {
   font-size: 8rem;
 }
@@ -124,6 +126,7 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
 }
+
 .team-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -136,6 +139,7 @@
   color: #f5c518;
   margin-bottom: 12px;
 }
+
 .about-card p {
   font-size: 0.95rem;
   color: #cccccc;
@@ -147,6 +151,7 @@
   font-size: 3rem;
   margin-bottom: 20px;
 }
+
 .why-us-number {
   font-size: 3rem !important;
 }
@@ -154,6 +159,7 @@
 .team-card h3 {
   color: #ffffff !important;
 }
+
 .team-role {
   color: #f5c518;
   text-transform: uppercase;
@@ -164,11 +170,13 @@
 .about-cta {
   margin: 0 60px;
 }
+
 .about-cta p {
   font-size: 1.1rem;
   color: #cccccc;
   margin-bottom: 40px;
 }
+
 .about-cta-buttons {
   display: flex;
   gap: 20px;

@@ -11,7 +11,7 @@ import AdminLayout from "./admins/AdminLayout";
 import AdminBookings from "./admins/AdminBookings";
 import AdminServices from "./admins/AdminServices";
 import About from "./pages/About";
-
+import AdminDashboard from "./admins/AdminDashboard";
 const App = () => {
   return (
     <Routes>
@@ -24,7 +24,7 @@ const App = () => {
         <Route path="booking" element={<Booking />} />
         <Route path="about" element={<About />} />
         <Route path="admin" element={<AdminLayout />}>
-          <Route index element={<AdminBookings />} />
+          <Route index element={<AdminDashboard />} />
           <Route path="bookings" element={<AdminBookings />} />
           <Route path="services" element={<AdminServices />} />
         </Route>

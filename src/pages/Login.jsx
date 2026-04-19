@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/login.css";
+import Register from "./Register";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const Login = () => {
@@ -26,7 +27,12 @@ const Login = () => {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Anmeldung fehlgeschlagen.");
       localStorage.setItem("token", data.token);
-      navigate("/admin/bookings");
+      localStorage.setItem("role", data.user.role);
+      if (data.user.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
       alert("Erfolgreich angemeldet!");
       setEmail("");
       setPassword("");
@@ -59,7 +65,7 @@ const Login = () => {
             <button type="submit">Anmelden</button>
 
             <p className="signup-link">
-              Noch kein Konto? <a href="/register">Registrieren</a>
+              Noch kein Konto? <Link to="/register">Registrieren</Link>
             </p>
           </form>
         </div>
