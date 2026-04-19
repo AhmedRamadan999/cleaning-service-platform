@@ -5,14 +5,10 @@
 }
 
 .contact-page {
-  background-color: #0d0d0d;
-  font-family: Arial, sans-serif;
-  min-height: 100vh;
   padding-bottom: 80px;
-  width: 1129px;
 }
 
-.contact-page > h1 {
+.contact-page>h1 {
   font-size: 4rem;
   color: #ffffff;
   text-align: center;
@@ -91,6 +87,7 @@
   background-color: #2a1a1a;
   border-color: #ff6b6b;
 }
+
 .success-msg {
   color: #4ade80;
   background-color: #1a2a1a;
