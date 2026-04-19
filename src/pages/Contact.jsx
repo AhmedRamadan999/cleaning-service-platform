@@ -3,8 +3,7 @@ import "../styles/Contact.css";
 
 const INITIAL_FORM_STATE = { name: "", email: "", subject: "", message: "" };
 const INITIAL_STATUS = { loading: false, error: "", success: false };
-const API_URL = import.meta.env.VITE_API_URL;
-
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 const Contact = () => {
   const [form, setForm] = useState(INITIAL_FORM_STATE);
   const [status, setStatus] = useState(INITIAL_STATUS);
