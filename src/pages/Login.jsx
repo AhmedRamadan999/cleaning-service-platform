@@ -2,16 +2,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/login.css";
 
-
-
-const API_URL = import.meta.env.VITE_API_URL; 
+const API_URL = import.meta.env.VITE_API_URL;
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  // دالة تسجيل الدخول
-
-  //  تسجيل الدخول
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,7 +17,6 @@ const Login = () => {
     }
 
     try {
-      // إرسال البيانات إلى السيرفر
       const res = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -34,7 +28,6 @@ const Login = () => {
       localStorage.setItem("token", data.token);
       navigate("/admin/bookings");
       alert("Erfolgreich angemeldet!");
-      // إفراغ النموذج
       setEmail("");
       setPassword("");
     } catch (err) {
@@ -46,7 +39,6 @@ const Login = () => {
     <div className="login-page">
       <h1>Anmeldung</h1>
       <div className="login-container">
-        {/* نموذج تسجيل الدخول */}
         <div className="login-form-section">
           <h2>Melden Sie sich an</h2>
           <form onSubmit={handleSubmit} className="login-form">
@@ -65,6 +57,10 @@ const Login = () => {
             />
 
             <button type="submit">Anmelden</button>
+
+            <p className="signup-link">
+              Noch kein Konto? <a href="/register">Registrieren</a>
+            </p>
           </form>
         </div>
       </div>
