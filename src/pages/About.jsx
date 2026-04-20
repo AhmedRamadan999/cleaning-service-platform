@@ -118,7 +118,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* WHY US */}
       <section className="about-why-us">
         <h2>Warum Clean Service Essen?</h2>
         <p className="section-subtitle">Zahlen, die für sich sprechen</p>
