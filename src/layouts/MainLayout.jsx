@@ -30,6 +30,7 @@ const MainLayout = () => {
                 {role === "admin" && <NavLink to="/admin">Dashboard</NavLink>}
                 <button
                   onClick={() => {
+                    logout();
                     navigate("/");
                   }}
                   className="logout-btn"
