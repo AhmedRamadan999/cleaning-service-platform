@@ -6,6 +6,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
 
   const [role, setRole] = useState(localStorage.getItem("role") || "");
+
   const login = (newToken, newRole) => {
     localStorage.setItem("token", newToken);
     localStorage.setItem("role", newRole);
@@ -27,5 +28,5 @@ export const AuthProvider = ({ children }) => {
   );
 };
 export const useAuth = () => {
-    return useContext(AuthContext);
+  return useContext(AuthContext);
 };
