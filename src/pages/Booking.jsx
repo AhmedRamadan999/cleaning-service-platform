@@ -3,8 +3,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "../styles/booking.css";
 
-
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 const Booking = () => {
   const [week, setWeek] = useState("");
   const [period, setPeriod] = useState("");

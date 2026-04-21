@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/register.css";
 
-const API_URL = import.meta.env.VITE_API_URL;
-
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
