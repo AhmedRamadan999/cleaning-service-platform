@@ -12,6 +12,7 @@ import AdminBookings from "./admins/AdminBookings";
 import AdminServices from "./admins/AdminServices";
 import About from "./pages/About";
 import AdminDashboard from "./admins/AdminDashboard";
+import AdminContacts from "./admins/AdminContacts";
 const App = () => {
   return (
     <Routes>
@@ -27,6 +28,7 @@ const App = () => {
           <Route index element={<AdminDashboard />} />
           <Route path="bookings" element={<AdminBookings />} />
           <Route path="services" element={<AdminServices />} />
+          <Route path="contacts" element={<AdminContacts />} />
         </Route>
       </Route>
     </Routes>

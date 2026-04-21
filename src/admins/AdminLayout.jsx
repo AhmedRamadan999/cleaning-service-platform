@@ -18,7 +18,10 @@ const AdminLayout = () => {
         <NavLink to="/admin">Dashboard</NavLink>
         <NavLink to="/admin/bookings">Bookings</NavLink>
         <NavLink to="/admin/services">Services</NavLink>
-        <button onClick={logout} className="logout">Logout</button>
+        <NavLink to="/admin/contacts">Kontakt</NavLink>
+        <button onClick={logout} className="logout">
+          Logout
+        </button>
       </div>
 
       <div className="admin-content">
