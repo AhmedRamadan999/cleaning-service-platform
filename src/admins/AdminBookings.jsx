@@ -5,7 +5,7 @@ import BookingCard from "./BookingCard";
 
 const AdminBookings = () => {
   const [bookings, setBookings] = useState([]);
-  const API_URL = import.meta.env.VITE_API_URL;
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
   const fetchBookings = () => {
     fetch(`${API_URL}/bookings`)

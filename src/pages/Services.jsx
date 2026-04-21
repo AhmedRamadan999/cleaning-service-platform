@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import "../styles/services.css";
 import { useState, useEffect } from "react";
 export default function Services() {
- 
   //  const servicesData = [
   //   {
   //     id: 1,
@@ -27,7 +26,7 @@ export default function Services() {
   //   },
   // ];
   const [services, setServices] = useState([]);
-const API_URL = import.meta.env.VITE_API_URL;
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
   const fetchServices = () => {
     fetch(`${API_URL}/services/active`)
       .then((res) => res.json())
