@@ -29,6 +29,11 @@ const createContact = async (req, res) => {
 // جيب كل الرسائل
 const getContacts = async (req, res) => {
   try {
+    await prisma.contact.updateMany({
+      where: { status: "" },
+      data: { status: "pending" },
+    });
+
     const contacts = await prisma.contact.findMany({
       orderBy: { createdAt: "desc" },
     });
@@ -52,5 +57,24 @@ const deleteContact = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
-module.exports = { createContact, getContacts, deleteContact };
+// تحديث حالة الرسالة
+const updateContactStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+    const contact = await prisma.contact.update({
+      where: { id: Number(id) },
+      data: { status },
+    });
+    res.json({ message: "Status updated", contact });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
+  }
+};
+module.exports = {
+  createContact,
+  getContacts,
+  deleteContact,
+  updateContactStatus,
+};
