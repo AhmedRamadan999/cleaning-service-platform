@@ -26,11 +26,16 @@ const Booking = () => {
 
     setError("");
     setSuccess(false);
-
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      setError("Bitte zuerst einloggen");
+      return;
+    }
     const bookingData = {
       week,
       period,
       serviceId: selectedServiceId,
+      userId: Number(userId),
     };
 
     const response = await fetch(`${API_URL}/bookings`, {

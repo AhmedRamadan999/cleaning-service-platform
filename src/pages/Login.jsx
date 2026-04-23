@@ -27,6 +27,7 @@ const Login = () => {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Anmeldung fehlgeschlagen.");
       login(data.token, data.user.role);
+      localStorage.setItem("userId", data.user.id);
       if (data.user.role === "admin") {
         navigate("/admin");
       } else {

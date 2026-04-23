@@ -7,7 +7,8 @@ const BookingCard = ({ booking, updateBookingStatus, deleteBooking }) => {
       <p>Week: {booking.week}</p>
       <p>Period: {booking.period}</p>
       <p className={`status ${booking.status}`}>Status: {booking.status}</p>
-
+      <p>Name: {booking.user?.name || "No user found"}</p>
+      <p>Email: {booking.user?.email || "No email found"}</p>
       <div className="booking-actions">
         <select
           value={booking.status}
