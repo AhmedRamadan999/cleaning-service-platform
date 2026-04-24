@@ -5,13 +5,14 @@ const prisma = new PrismaClient();
 
 const createBooking = async (req, res) => {
     try {
-        const { week, period, serviceId } = req.body;
+        const { week, period, serviceId, userId } = req.body;
 
         const booking = await prisma.booking.create({
             data: {
                 week,
                 period,
                 serviceId,
+                userId,
             },
         });
 
@@ -31,6 +32,7 @@ const getBookings = async (req, res) => {
         const bookings = await prisma.booking.findMany({
             include: {
                 service: true,
+                user: true,
             },
         });
         res.json(bookings);
