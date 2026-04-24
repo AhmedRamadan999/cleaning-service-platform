@@ -43,21 +43,21 @@ const Home = () => {
         </section>
 
         {/* SERVICES */}
-        <section className="services">
+        <section className="services-home">
           <h2>Unsere Services</h2>
 
-          <div className="services-grid">
-            <div className="service-card">
+          <div className="services-grid-home">
+            <div className="service-card-home">
               <h3>Hausreinigung</h3>
               <p>Professionelle Reinigung für Ihr Zuhause.</p>
             </div>
 
-            <div className="service-card">
+            <div className="service-card-home">
               <h3>Büroreinigung</h3>
               <p>Saubere Büros sorgen für produktives Arbeiten.</p>
             </div>
 
-            <div className="service-card">
+            <div className="service-card-home">
               <h3>Fensterreinigung</h3>
               <p>Kristallklare Fenster ohne Streifen.</p>
             </div>

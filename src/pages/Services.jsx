@@ -48,7 +48,7 @@ export default function Services() {
         <h1 className="services-title">Unsere Services</h1>
         <div className="services-grid">
           {services.map((service) => (
-            <div key={service.id}>
+            <div className="service-card" key={service.id}>
               <h3>{service.title}</h3>
               <p>{service.desc}</p>
               <p className="price">Preis: {service.price} €</p>

@@ -89,9 +89,10 @@ const AdminServices = () => {
   return (
     <>
       <h2>Services</h2>
-      <div className="services-grid">
-        <h3 className="Services-adress">Add New Service</h3>
 
+      <h3 className="Services-adress">Add New Service</h3>
+
+      <div className="add-service-form">
         <input
           type="text"
           placeholder="Title"
@@ -107,7 +108,7 @@ const AdminServices = () => {
           onChange={(e) =>
             setNewService({ ...newService, desc: e.target.value })
           }
-        ></textarea>
+        />
 
         <input
           type="number"
@@ -121,7 +122,9 @@ const AdminServices = () => {
         <button className="add-service-btn" onClick={createService}>
           Add Service
         </button>
+      </div>
 
+      <div className="services-grid">
         {services.map((service) => (
           <ServiceCard
             key={service.id}
