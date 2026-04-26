@@ -124,7 +124,7 @@ const AdminServices = () => {
         </button>
       </div>
 
-      <div className="services-grid">
+      <div className="admin-services-grid">
         {services.map((service) => (
           <ServiceCard
             key={service.id}

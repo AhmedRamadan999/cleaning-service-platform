@@ -1,6 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
+
 const getServices = async (req, res) => {
     try {
         const services = await prisma.service.findMany();
@@ -25,7 +26,7 @@ const getActiveServices = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
-
+// بتغير حالة الكرت بتسويه active او isActive استاذ خربطت بين هدول لهيك خليتهم تعليق😁
 const updateServiceStatus = async (req, res) => {
     try {
         const { id } = req.params;
@@ -50,6 +51,7 @@ const updateServiceStatus = async (req, res) => {
         res.status(500).json({ error: error.message })
     }
 }
+// عم تغير محتويات الكرت
 const updateService = async (req,res) => {
     try {
         const {id} = req.params;

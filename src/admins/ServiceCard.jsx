@@ -10,7 +10,7 @@ const ServiceCard = ({
   saveEditedService,
 }) => {
   return (
-    <div className="service-card">
+    <div className="admin-service-card">
       {editingServiceId === service.id ? (
         <input
           type="text"
@@ -57,9 +57,15 @@ const ServiceCard = ({
       </select>
 
       {editingServiceId === service.id ? (
-        <button className="save-btn" onClick={() => saveEditedService(service.id)}>Save</button>
+        <button
+          className="save-btn"
+          onClick={() => saveEditedService(service.id)}
+        >
+          Save
+        </button>
       ) : (
-        <button className="edit-btn"
+        <button
+          className="edit-btn"
           onClick={() => {
             setEditingServiceId(service.id);
             setEditedService({
