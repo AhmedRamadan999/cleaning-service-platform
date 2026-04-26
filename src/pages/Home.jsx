@@ -4,6 +4,7 @@ import pexels from "../assets/pexels.jpg";
 import beforeRoom from "../assets/before_room.png";
 import afterRoom from "../assets/after_room.png";
 import ahmedImg from "../assets/Ahmed.jpeg";
+import mohamadImg from "../assets/mohamad.jpeg";
 import { Link } from "react-router-dom";
 
 const Home = () => {
@@ -123,8 +124,8 @@ const Home = () => {
               <p>⭐⭐⭐⭐⭐</p>
             </div>
             <div className="member">
-              <img src={ahmedImg} alt="Mohammed" />
-              <h3>Mohammed</h3>
+              <img src={mohamadImg} alt="Mohammed" />
+              <h3>Mohamed</h3>
               <p className="role">Project Managment</p>
               <p>⭐⭐⭐⭐⭐</p>
             </div>
