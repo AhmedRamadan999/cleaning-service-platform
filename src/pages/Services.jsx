@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import "../styles/services.css";
 import { useState, useEffect } from "react";
-
+import servicesHero from "../assets/pexelsService.jpg";
 export default function Services() {
   //  const servicesData = [
   //   {
@@ -44,8 +44,14 @@ export default function Services() {
   }, []);
   return (
     <>
-      <div className="services">
+      <div
+        className="services"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.82)), url(${servicesHero})`,
+        }}
+      >
         <h1 className="services-title">Unsere Services</h1>
+
         <div className="services-grid">
           {services.map((service) => (
             <div className="service-card" key={service.id}>
