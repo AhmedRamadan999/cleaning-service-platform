@@ -267,3 +267,19 @@ body {
   margin-top: 12px;
   flex-wrap: wrap;
 }
+
+.btn-delete {
+  background: #dc2626;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-accept {
+  padding: 8px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: white;
+}
