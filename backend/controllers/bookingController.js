@@ -23,6 +23,17 @@ const createBooking = async (req, res) => {
                     connect: { id: Number(userId) },
                 },
             },
+            include: {
+                service: true,
+                user: {
+                    select: {
+                        id: true,
+                        name: true,
+                        email: true,
+                        role: true,
+                    },
+                },
+            },
         });
 
         res.status(201).json({
@@ -37,11 +48,60 @@ const createBooking = async (req, res) => {
 
 const getBookings = async (req, res) => {
     try {
-        const bookings = await prisma.booking.findMany({
-            orderBy: {
-                id: "desc",
-            },
-        });
+        const rows = await prisma.$queryRaw`
+      SELECT
+        b.id,
+        b.week,
+        b.period,
+        b.status,
+        b."serviceId",
+        b."userId",
+        b."createdAt",
+
+        s.id AS "service_id",
+        s.title AS "service_title",
+        s."desc" AS "service_desc",
+        s.price AS "service_price",
+        s."isActive" AS "service_isActive",
+
+        u.id AS "user_id",
+        u.name AS "user_name",
+        u.email AS "user_email",
+        u.role AS "user_role"
+      FROM "Booking" b
+      LEFT JOIN "Service" s ON b."serviceId" = s.id
+      LEFT JOIN "User" u ON b."userId" = u.id
+      ORDER BY b.id DESC
+    `;
+
+        const bookings = rows.map((row) => ({
+            id: row.id,
+            week: row.week,
+            period: row.period,
+            status: row.status,
+            serviceId: row.serviceId,
+            userId: row.userId,
+            createdAt: row.createdAt,
+
+            service: row.service_id
+                ? {
+                    id: row.service_id,
+                    title: row.service_title,
+                    desc: row.service_desc,
+                    price: row.service_price,
+                    isActive: row.service_isActive,
+                }
+                : null,
+
+            user: row.user_id
+                ? {
+                    id: row.user_id,
+                    name: row.user_name,
+                    email: row.user_email,
+                    role: row.user_role,
+                }
+                : null,
+        }));
 
         res.json(bookings);
     } catch (error) {
