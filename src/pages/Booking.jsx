@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, NavLink } from "react-router-dom";
 import "../styles/booking.css";
-
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+import { API_URL } from "../config/api";
 
 const Booking = () => {
   const [week, setWeek] = useState("");
@@ -18,6 +17,7 @@ const Booking = () => {
   const userId = localStorage.getItem("userId");
 
   const isLoggedIn = !!token;
+
   const isValid =
     week !== "" &&
     period !== "" &&
@@ -29,8 +29,9 @@ const Booking = () => {
     if (!token) return "Bitte zuerst einloggen.";
     if (!userId) return "Kein Benutzer gefunden. Bitte erneut einloggen.";
     if (!selectedServiceId) return "Kein Service ausgewählt.";
-    if (!week || !period)
+    if (!week || !period) {
       return "Bitte wählen Sie eine Woche und einen Zeitraum aus.";
+    }
 
     return "";
   };

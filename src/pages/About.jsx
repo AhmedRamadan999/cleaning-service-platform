@@ -8,46 +8,39 @@ const teamMembers = [
     name: "Mohammed Al-Hassan",
     role: "Geschäftsführer",
     desc: "Über 10 Jahre Erfahrung im Reinigungsservice.",
-    emoji: "👨‍💼",
   },
   {
     id: 2,
     name: "Sarah Müller",
     role: "Teamleiterin",
     desc: "Expertin für Haushalts- und Büroreinigung.",
-    emoji: "👩‍💼",
   },
   {
     id: 3,
     name: "Thomas Weber",
     role: "Kundenbetreuung",
     desc: "Immer für Ihre Fragen und Wünsche erreichbar.",
-    emoji: "👨‍🔧",
   },
 ];
 
 const ourValues = [
   {
     id: 1,
-    icon: "✨",
     title: "Qualität",
     desc: "Wir liefern höchste Reinigungsqualität bei jedem Auftrag.",
   },
   {
     id: 2,
-    icon: "🤝",
     title: "Vertrauen",
     desc: "Unsere Kunden können sich zu 100% auf uns verlassen.",
   },
   {
     id: 3,
-    icon: "🌱",
     title: "Umweltschutz",
     desc: "Wir verwenden nur umweltfreundliche Reinigungsmittel.",
   },
   {
     id: 4,
-    icon: "⏱️",
     title: "Pünktlichkeit",
     desc: "Wir halten unsere Termine zuverlässig ein.",
   },

@@ -1,10 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { useState, useEffect } from "react";
 import "../styles/services.css";
 import servicesHero from "../assets/pexelsService.jpg";
-
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+import { API_URL } from "../config/api";
 
 export default function Services() {
   const [services, setServices] = useState([]);
@@ -12,22 +10,22 @@ export default function Services() {
 
   const fetchServices = async () => {
     try {
-      console.log("API_URL:", API_URL);
+      setError("");
 
       const res = await fetch(`${API_URL}/services/active`);
 
+      const data = await res.json().catch(() => null);
+
       if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
+        throw new Error(
+          data?.error || "Services konnten nicht geladen werden.",
+        );
       }
-
-      const data = await res.json();
-
-      console.log("services data:", data);
 
       setServices(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error("Fetch services error:", err);
-      setError("Services konnten nicht geladen werden.");
+      setError(err.message || "Services konnten nicht geladen werden.");
     }
   };
 
