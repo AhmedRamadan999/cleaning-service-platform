@@ -1,20 +1,9 @@
 import React, { useState } from "react";
 import "../styles/Contact.css";
-import { API_URL } from "../config/api";
 
-const INITIAL_FORM_STATE = {
-  name: "",
-  email: "",
-  subject: "",
-  message: "",
-};
-
-const INITIAL_STATUS = {
-  loading: false,
-  error: "",
-  success: false,
-};
-
+const INITIAL_FORM_STATE = { name: "", email: "", subject: "", message: "" };
+const INITIAL_STATUS = { loading: false, error: "", success: false };
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 const Contact = () => {
   const [form, setForm] = useState(INITIAL_FORM_STATE);
   const [status, setStatus] = useState(INITIAL_STATUS);
@@ -24,10 +13,7 @@ const Contact = () => {
       setStatus(INITIAL_STATUS);
     }
 
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
@@ -42,36 +28,21 @@ const Contact = () => {
     }
 
     try {
-      setStatus({
-        ...INITIAL_STATUS,
-        loading: true,
-      });
+      setStatus({ ...INITIAL_STATUS, loading: true });
 
       const res = await fetch(`${API_URL}/contact`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
 
       const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Etwas ist schiefgelaufen.");
 
-      if (!res.ok) {
-        throw new Error(data.error || "Etwas ist schiefgelaufen.");
-      }
-
-      setStatus({
-        ...INITIAL_STATUS,
-        success: true,
-      });
-
+      setStatus({ ...INITIAL_STATUS, success: true });
       setForm(INITIAL_FORM_STATE);
     } catch (err) {
-      setStatus({
-        ...INITIAL_STATUS,
-        error: err.message || "Serverfehler. Bitte versuchen Sie es erneut.",
-      });
+      setStatus({ ...INITIAL_STATUS, error: err.message });
     }
   };
 
@@ -132,7 +103,6 @@ const Contact = () => {
             />
 
             {status.error && <p className="error-msg">{status.error}</p>}
-
             {status.success && (
               <p className="success-msg">
                 ✅ Vielen Dank! Ihre Nachricht wurde gesendet.
@@ -153,21 +123,18 @@ const Contact = () => {
               <span>📍</span>
               <span>Kettwiger Str. 10, 45127 Essen</span>
             </div>
-
             <br />
 
             <div className="info-item">
               <span>📞</span>
               <span>+49 91742239</span>
             </div>
-
             <br />
 
             <div className="info-item">
               <span>✉️</span>
               <span>info@cleanservice-essen.de</span>
             </div>
-
             <br />
 
             <div className="info-item">

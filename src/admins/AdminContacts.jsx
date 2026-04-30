@@ -1,50 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/admin.css";
-import { API_URL } from "../config/api";
 
 const AdminContacts = () => {
   const [contacts, setContacts] = useState([]);
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
-  const fetchContacts = async () => {
-    try {
-      const res = await fetch(`${API_URL}/contact`);
-      const data = await res.json();
-
-      setContacts(Array.isArray(data) ? data : []);
-    } catch (err) {
-      console.log(err);
-      setContacts([]);
-    }
+  const fetchContacts = () => {
+    fetch(`${API_URL}/contact`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setContacts(data);
+        } else {
+          setContacts([]);
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
-  const deleteContact = async (id) => {
-    try {
-      await fetch(`${API_URL}/contact/${id}`, {
-        method: "DELETE",
-      });
-
-      fetchContacts();
-    } catch (err) {
-      console.log(err);
-    }
+  const deleteContact = (id) => {
+    fetch(`${API_URL}/contact/${id}`, {
+      method: "DELETE",
+    }).then(() => fetchContacts());
   };
 
-  const updateStatus = async (id, newStatus) => {
-    try {
-      await fetch(`${API_URL}/contact/${id}/status`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          status: newStatus,
-        }),
-      });
-
-      fetchContacts();
-    } catch (err) {
-      console.log(err);
-    }
+  const updateStatus = (id, newStatus) => {
+    fetch(`${API_URL}/contact/${id}/status`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status: newStatus }),
+    }).then(() => fetchContacts());
   };
 
   useEffect(() => {
@@ -54,16 +39,13 @@ const AdminContacts = () => {
   return (
     <>
       <h2>Contact Messages</h2>
-
       <div className="bookings-grid">
         {contacts.map((contact) => (
           <div key={contact.id} className="booking-card">
             <h3>{contact.name}</h3>
-
             <p>Email: {contact.email}</p>
             <p>Subject: {contact.subject}</p>
             <p>Message: {contact.message}</p>
-
             <p>
               Status:{" "}
               <span
@@ -76,7 +58,6 @@ const AdminContacts = () => {
                 {contact.status === "replied" ? "Replied" : "Pending"}
               </span>
             </p>
-
             <div className="card-buttons">
               {contact.status !== "replied" && (
                 <button
@@ -86,7 +67,6 @@ const AdminContacts = () => {
                   Mark as Replied
                 </button>
               )}
-
               <button
                 className="btn-delete"
                 onClick={() => deleteContact(contact.id)}

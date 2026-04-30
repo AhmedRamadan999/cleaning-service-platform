@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/register.css";
-import { API_URL } from "../config/api";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -10,7 +10,6 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -37,25 +36,17 @@ const Register = () => {
     try {
       const res = await fetch(`${API_URL}/auth/register`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
       });
 
-      const data = await res.json().catch(() => null);
-
-      if (!res.ok) {
-        throw new Error(data?.error || "Registrierung fehlgeschlagen.");
-      }
+      const data = await res.json();
+      if (!res.ok)
+        throw new Error(data.error || "Registrierung fehlgeschlagen.");
 
       navigate("/login");
     } catch (err) {
-      setError(err.message || "Serverfehler. Bitte versuchen Sie es erneut.");
+      setError(err.message);
     } finally {
       setLoading(false);
     }
