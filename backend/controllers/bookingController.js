@@ -23,10 +23,6 @@ const createBooking = async (req, res) => {
                     connect: { id: Number(userId) },
                 },
             },
-            include: {
-                service: true,
-                user: true,
-            },
         });
 
         res.status(201).json({
@@ -42,10 +38,6 @@ const createBooking = async (req, res) => {
 const getBookings = async (req, res) => {
     try {
         const bookings = await prisma.booking.findMany({
-            include: {
-                service: true,
-                user: true,
-            },
             orderBy: {
                 id: "desc",
             },
