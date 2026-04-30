@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "../styles/login.css";
 import { useAuth } from "../context/AuthContext";
 import { API_URL } from "../config/api";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,17 +26,29 @@ const Login = () => {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Anmeldung fehlgeschlagen.");
-      login(data.token, data.user.role);
+
+      if (!res.ok) {
+        throw new Error(data.error || "Anmeldung fehlgeschlagen.");
+      }
+
+      // مهم للحجز
+      localStorage.setItem("token", data.token);
       localStorage.setItem("userId", data.user.id);
+      localStorage.setItem("role", data.user.role);
+
+      // مهم للـ AuthContext
+      login(data.token, data.user.role);
+
+      alert("Erfolgreich angemeldet!");
+
+      setEmail("");
+      setPassword("");
+
       if (data.user.role === "admin") {
         navigate("/admin");
       } else {
         navigate("/");
       }
-      alert("Erfolgreich angemeldet!");
-      setEmail("");
-      setPassword("");
     } catch (err) {
       alert(err.message);
     }
@@ -44,9 +57,11 @@ const Login = () => {
   return (
     <div className="login-page">
       <h1>Anmeldung</h1>
+
       <div className="login-container">
         <div className="login-form-section">
           <h2>Melden Sie sich an</h2>
+
           <form onSubmit={handleSubmit} className="login-form">
             <label>E-Mail</label>
             <input
