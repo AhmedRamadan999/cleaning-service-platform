@@ -1,11 +1,18 @@
-const express = require("express")
+const express = require("express");
 const router = express.Router();
 
-const { getServices, getActiveServices, updateServiceStatus, updateService, createService } = require("../controllers/serviceController")
+const {
+    getServices,
+    getActiveServices,
+    updateServiceStatus,
+    updateService,
+    createService,
+} = require("../controllers/serviceController");
 
 router.get("/", getServices);
 router.get("/active", getActiveServices);
+router.post("/", createService);
 router.put("/:id/status", updateServiceStatus);
 router.put("/:id", updateService);
-router.post("/", createService);
+
 module.exports = router;

@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
-const { Pool } = require("pg");
+const { PrismaClient } = require("@prisma/client");
 
 const contactRoutes = require("./routes/contactRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
@@ -10,37 +10,26 @@ const serviceRoutes = require("./routes/serviceRoutes");
 const authRoutes = require("./routes/authRoutes");
 
 const app = express();
+const prisma = new PrismaClient();
 
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-        rejectUnauthorized: false,
-    },
-});
-
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Routes
 app.use("/contact", contactRoutes);
 app.use("/bookings", bookingRoutes);
 app.use("/services", serviceRoutes);
 app.use("/auth", authRoutes);
 
-// Test route
 app.get("/", (req, res) => {
     res.send("Backend working ✅");
 });
 
-// Database test route
 app.get("/db-test", async (req, res) => {
     try {
-        const result = await pool.query("SELECT NOW()");
+        await prisma.$connect();
 
         res.json({
             message: "Database connected ✅",
-            time: result.rows[0],
         });
     } catch (error) {
         console.log("DB ERROR:", error);

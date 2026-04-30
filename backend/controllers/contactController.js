@@ -25,7 +25,7 @@ const createContact = async (req, res) => {
       contact,
     });
   } catch (error) {
-    console.log(error);
+    console.log("CREATE CONTACT ERROR:", error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -40,7 +40,7 @@ const getContacts = async (req, res) => {
 
     res.json(contacts);
   } catch (error) {
-    console.log(error);
+    console.log("GET CONTACTS ERROR:", error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -48,6 +48,12 @@ const getContacts = async (req, res) => {
 const deleteContact = async (req, res) => {
   try {
     const { id } = req.params;
+
+    if (isNaN(Number(id))) {
+      return res.status(400).json({
+        error: "Invalid contact id",
+      });
+    }
 
     const contact = await prisma.contact.delete({
       where: {
@@ -60,7 +66,7 @@ const deleteContact = async (req, res) => {
       contact,
     });
   } catch (error) {
-    console.log(error);
+    console.log("DELETE CONTACT ERROR:", error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -69,6 +75,26 @@ const updateContactStatus = async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
+
+    if (isNaN(Number(id))) {
+      return res.status(400).json({
+        error: "Invalid contact id",
+      });
+    }
+
+    if (!status) {
+      return res.status(400).json({
+        error: "Status is required",
+      });
+    }
+
+    const allowedStatus = ["pending", "replied"];
+
+    if (!allowedStatus.includes(status)) {
+      return res.status(400).json({
+        error: "Invalid status",
+      });
+    }
 
     const contact = await prisma.contact.update({
       where: {
@@ -84,7 +110,7 @@ const updateContactStatus = async (req, res) => {
       contact,
     });
   } catch (error) {
-    console.log(error);
+    console.log("UPDATE CONTACT STATUS ERROR:", error);
     res.status(500).json({ error: error.message });
   }
 };

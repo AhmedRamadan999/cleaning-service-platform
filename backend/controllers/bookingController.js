@@ -16,8 +16,16 @@ const createBooking = async (req, res) => {
             data: {
                 week,
                 period,
-                serviceId: Number(serviceId),
-                userId: Number(userId),
+                service: {
+                    connect: { id: Number(serviceId) },
+                },
+                user: {
+                    connect: { id: Number(userId) },
+                },
+            },
+            include: {
+                service: true,
+                user: true,
             },
         });
 
@@ -26,7 +34,7 @@ const createBooking = async (req, res) => {
             booking,
         });
     } catch (error) {
-        console.log(error);
+        console.log("CREATE BOOKING ERROR:", error);
         res.status(500).json({ error: error.message });
     }
 };
@@ -45,7 +53,7 @@ const getBookings = async (req, res) => {
 
         res.json(bookings);
     } catch (error) {
-        console.log(error);
+        console.log("GET BOOKINGS ERROR:", error);
         res.status(500).json({ error: error.message });
     }
 };
@@ -75,7 +83,7 @@ const updateBookingStatus = async (req, res) => {
             booking: updatedBooking,
         });
     } catch (error) {
-        console.log(error);
+        console.log("UPDATE BOOKING STATUS ERROR:", error);
         res.status(500).json({ error: error.message });
     }
 };
@@ -95,7 +103,7 @@ const deleteBooking = async (req, res) => {
             booking: deletedBooking,
         });
     } catch (error) {
-        console.log(error);
+        console.log("DELETE BOOKING ERROR:", error);
         res.status(500).json({ error: error.message });
     }
 };

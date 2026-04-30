@@ -13,7 +13,6 @@ export default function Services() {
       setError("");
 
       const res = await fetch(`${API_URL}/services/active`);
-
       const data = await res.json().catch(() => null);
 
       if (!res.ok) {
@@ -25,7 +24,7 @@ export default function Services() {
       setServices(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error("Fetch services error:", err);
-      setError(err.message || "Services konnten nicht geladen werden.");
+      setError("Server nicht erreichbar. Bitte später versuchen.");
     }
   };
 
