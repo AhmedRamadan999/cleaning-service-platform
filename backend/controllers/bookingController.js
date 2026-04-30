@@ -12,33 +12,20 @@ const createBooking = async (req, res) => {
             });
         }
 
-        const booking = await prisma.booking.create({
-            data: {
-                week,
-                period,
-                service: {
-                    connect: { id: Number(serviceId) },
-                },
-                user: {
-                    connect: { id: Number(userId) },
-                },
-            },
-            include: {
-                service: true,
-                user: {
-                    select: {
-                        id: true,
-                        name: true,
-                        email: true,
-                        role: true,
-                    },
-                },
-            },
-        });
+        const serviceIdNumber = Number(serviceId);
+        const userIdNumber = Number(userId);
+
+        const rows = await prisma.$queryRaw`
+      INSERT INTO "Booking" ("week", "period", "serviceId", "userId")
+      VALUES (${week}, ${period}, ${serviceIdNumber}, ${userIdNumber})
+      RETURNING id, week, period, status, "serviceId", "userId", "createdAt"
+    `;
+
+        const createdBooking = rows[0];
 
         res.status(201).json({
             message: "booking created",
-            booking,
+            booking: createdBooking,
         });
     } catch (error) {
         console.log("CREATE BOOKING ERROR:", error);
