@@ -1,90 +1,109 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/admin.css";
-import React from "react";
 import ServiceCard from "./ServiceCard";
-
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+import { API_URL } from "../config/api";
 
 const AdminServices = () => {
   const [services, setServices] = useState([]);
   const [editingServiceId, setEditingServiceId] = useState(null);
+
   const [newService, setNewService] = useState({
     title: "",
     desc: "",
     price: "",
   });
+
   const [editedService, setEditedService] = useState({
     title: "",
     desc: "",
     price: "",
   });
 
-  const fetchServices = () => {
-    fetch(`${API_URL}/services`)
-      .then((res) => res.json())
-      .then((data) => {
-        setServices(data);
-      })
-      .catch((err) => {
-        console.log(err);
+  const fetchServices = async () => {
+    try {
+      const res = await fetch(`${API_URL}/services`);
+      const data = await res.json();
+
+      setServices(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.log(err);
+      setServices([]);
+    }
+  };
+
+  const updateServiceStatus = async (id, newStatus) => {
+    try {
+      await fetch(`${API_URL}/services/${id}/status`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          isActive: newStatus,
+        }),
       });
-  };
 
-  useEffect(() => {
-    fetchServices();
-  }, []);
-
-  const updateServiceStatus = (id, newStatus) => {
-    fetch(`${API_URL}/services/${id}/status`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        isActive: newStatus,
-      }),
-    }).then(() => {
       fetchServices();
-    });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const saveEditedService = (id) => {
-    fetch(`${API_URL}/services/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: editedService.title,
-        desc: editedService.desc,
-        price: editedService.price,
-      }),
-    }).then(() => {
+  const saveEditedService = async (id) => {
+    try {
+      await fetch(`${API_URL}/services/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: editedService.title,
+          desc: editedService.desc,
+          price: editedService.price,
+        }),
+      });
+
       fetchServices();
       setEditingServiceId(null);
-    });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const createService = () => {
-    fetch(`${API_URL}/services`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: newService.title,
-        desc: newService.desc,
-        price: newService.price,
-      }),
-    }).then(() => {
+  const createService = async () => {
+    if (!newService.title || !newService.desc || !newService.price) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    try {
+      await fetch(`${API_URL}/services`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: newService.title,
+          desc: newService.desc,
+          price: newService.price,
+        }),
+      });
+
       fetchServices();
+
       setNewService({
         title: "",
         desc: "",
         price: "",
       });
-    });
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+  useEffect(() => {
+    fetchServices();
+  }, []);
 
   return (
     <>
@@ -98,7 +117,10 @@ const AdminServices = () => {
           placeholder="Title"
           value={newService.title}
           onChange={(e) =>
-            setNewService({ ...newService, title: e.target.value })
+            setNewService({
+              ...newService,
+              title: e.target.value,
+            })
           }
         />
 
@@ -106,7 +128,10 @@ const AdminServices = () => {
           placeholder="Description"
           value={newService.desc}
           onChange={(e) =>
-            setNewService({ ...newService, desc: e.target.value })
+            setNewService({
+              ...newService,
+              desc: e.target.value,
+            })
           }
         />
 
@@ -115,7 +140,10 @@ const AdminServices = () => {
           placeholder="Price"
           value={newService.price}
           onChange={(e) =>
-            setNewService({ ...newService, price: e.target.value })
+            setNewService({
+              ...newService,
+              price: e.target.value,
+            })
           }
         />
 

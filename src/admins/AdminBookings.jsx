@@ -1,43 +1,51 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/admin.css";
-import React from "react";
 import BookingCard from "./BookingCard";
+import { API_URL } from "../config/api";
 
 const AdminBookings = () => {
   const [bookings, setBookings] = useState([]);
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
-  const fetchBookings = () => {
-    fetch(`${API_URL}/bookings`)
-      .then((res) => res.json())
-      .then((data) => {
-        setBookings(data);
-      })
-      .catch((err) => {
-        console.log(err);
+  const fetchBookings = async () => {
+    try {
+      const res = await fetch(`${API_URL}/bookings`);
+      const data = await res.json();
+
+      setBookings(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.log(err);
+      setBookings([]);
+    }
+  };
+
+  const updateBookingStatus = async (id, newStatus) => {
+    try {
+      await fetch(`${API_URL}/bookings/${id}/status`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          status: newStatus,
+        }),
       });
+
+      fetchBookings();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const updateBookingStatus = (id, newStatus) => {
-    fetch(`${API_URL}/bookings/${id}/status`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        status: newStatus,
-      }),
-    }).then(() => {
-      fetchBookings();
-    });
-  };
+  const deleteBooking = async (id) => {
+    try {
+      await fetch(`${API_URL}/bookings/${id}`, {
+        method: "DELETE",
+      });
 
-  const deleteBooking = (id) => {
-    fetch(`${API_URL}/bookings/${id}`, {
-      method: "DELETE",
-    }).then(() => {
       fetchBookings();
-    });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
@@ -47,6 +55,7 @@ const AdminBookings = () => {
   return (
     <>
       <h2 id="bookings-section">Bookings</h2>
+
       <div className="bookings-grid">
         {bookings.map((booking) => (
           <BookingCard
