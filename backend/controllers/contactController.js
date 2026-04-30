@@ -1,19 +1,23 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-// إنشاء رسالة تواصل جديدة
 const createContact = async (req, res) => {
   try {
     const { name, email, subject, message } = req.body;
 
     if (!name || !email || !subject || !message) {
-      return res
-        .status(400)
-        .json({ error: "Bitte füllen Sie alle Felder aus." });
+      return res.status(400).json({
+        error: "Bitte füllen Sie alle Felder aus.",
+      });
     }
 
     const contact = await prisma.contact.create({
-      data: { name, email, subject, message },
+      data: {
+        name,
+        email,
+        subject,
+        message,
+      },
     });
 
     res.status(201).json({
@@ -26,17 +30,14 @@ const createContact = async (req, res) => {
   }
 };
 
-// جيب كل الرسائل
 const getContacts = async (req, res) => {
   try {
-    await prisma.contact.updateMany({
-      where: { status: "" },
-      data: { status: "pending" },
+    const contacts = await prisma.contact.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
-    const contacts = await prisma.contact.findMany({
-      orderBy: { createdAt: "desc" },
-    });
     res.json(contacts);
   } catch (error) {
     console.log(error);
@@ -44,34 +45,50 @@ const getContacts = async (req, res) => {
   }
 };
 
-// حذف رسالة
 const deleteContact = async (req, res) => {
   try {
     const { id } = req.params;
+
     const contact = await prisma.contact.delete({
-      where: { id: Number(id) },
+      where: {
+        id: Number(id),
+      },
     });
-    res.json({ message: "Contact deleted", contact });
+
+    res.json({
+      message: "Contact deleted",
+      contact,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: error.message });
   }
 };
-// تحديث حالة الرسالة
+
 const updateContactStatus = async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
+
     const contact = await prisma.contact.update({
-      where: { id: Number(id) },
-      data: { status },
+      where: {
+        id: Number(id),
+      },
+      data: {
+        status,
+      },
     });
-    res.json({ message: "Status updated", contact });
+
+    res.json({
+      message: "Status updated",
+      contact,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: error.message });
   }
 };
+
 module.exports = {
   createContact,
   getContacts,

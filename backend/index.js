@@ -1,54 +1,54 @@
 require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 const { Pool } = require("pg");
 
 const contactRoutes = require("./routes/contactRoutes");
-const bookingRoutes = require("./routes/bookingRoutes")
-const app = express();
-const serviceRoutes = require("./routes/serviceRoutes")
+const bookingRoutes = require("./routes/bookingRoutes");
+const serviceRoutes = require("./routes/serviceRoutes");
 const authRoutes = require("./routes/authRoutes");
+
+const app = express();
+
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false,
+    },
 });
 
+// Middleware
 app.use(cors());
 app.use(express.json());
+
+// Routes
 app.use("/contact", contactRoutes);
 app.use("/bookings", bookingRoutes);
 app.use("/services", serviceRoutes);
-app.use("/auth", authRoutes)
+app.use("/auth", authRoutes);
+
+// Test route
 app.get("/", (req, res) => {
     res.send("Backend working ✅");
 });
 
-app.post("/test", (req, res) => {
-    console.log(req.body);
-    res.json({
-        message: "Data received",
-        data: req.body,
-    });
-});
-
-app.post("/create-users-table", async (req, res) => {
+// Database test route
+app.get("/db-test", async (req, res) => {
     try {
-        const sql = `
-      CREATE TABLE IF NOT EXISTS users (
-        id SERIAL PRIMARY KEY,
-        first_name VARCHAR(255) NOT NULL,
-        last_name VARCHAR(255) NOT NULL,
-        age INT,
-        email VARCHAR(255) UNIQUE NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      );
-    `;
+        const result = await pool.query("SELECT NOW()");
 
-        await pool.query(sql);
-
-        res.json({ message: "users table created successfully" });
+        res.json({
+            message: "Database connected ✅",
+            time: result.rows[0],
+        });
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: error.message });
+        console.log("DB ERROR:", error);
+
+        res.status(500).json({
+            error: "Database connection failed",
+            details: error.message,
+        });
     }
 });
 
