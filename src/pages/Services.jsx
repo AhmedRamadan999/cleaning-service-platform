@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "../styles/services.css";
 import servicesHero from "../assets/pexelsService.jpg";
-import { API_URL } from "../config/api";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 export default function Services() {
   const [services, setServices] = useState([]);
