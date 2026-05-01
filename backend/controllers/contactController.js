@@ -1,4 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
+
 const prisma = new PrismaClient();
 
 const createContact = async (req, res) => {
@@ -11,18 +12,15 @@ const createContact = async (req, res) => {
       });
     }
 
-    const contact = await prisma.contact.create({
-      data: {
-        name,
-        email,
-        subject,
-        message,
-      },
-    });
+    const rows = await prisma.$queryRaw`
+      INSERT INTO "Contact" ("name", "email", "subject", "message", "status")
+      VALUES (${name}, ${email}, ${subject}, ${message}, 'pending')
+      RETURNING id, name, email, subject, message, status, "createdAt"
+    `;
 
     res.status(201).json({
       message: "Nachricht erfolgreich gesendet!",
-      contact,
+      contact: rows[0],
     });
   } catch (error) {
     console.log("CREATE CONTACT ERROR:", error);
@@ -32,11 +30,11 @@ const createContact = async (req, res) => {
 
 const getContacts = async (req, res) => {
   try {
-    const contacts = await prisma.contact.findMany({
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
+    const contacts = await prisma.$queryRaw`
+      SELECT id, name, email, subject, message, status, "createdAt"
+      FROM "Contact"
+      ORDER BY "createdAt" DESC
+    `;
 
     res.json(contacts);
   } catch (error) {
@@ -49,21 +47,21 @@ const deleteContact = async (req, res) => {
   try {
     const { id } = req.params;
 
-    if (isNaN(Number(id))) {
-      return res.status(400).json({
-        error: "Invalid contact id",
+    const rows = await prisma.$queryRaw`
+      DELETE FROM "Contact"
+      WHERE id = ${Number(id)}
+      RETURNING id, name, email, subject, message, status, "createdAt"
+    `;
+
+    if (rows.length === 0) {
+      return res.status(404).json({
+        error: "Contact not found",
       });
     }
 
-    const contact = await prisma.contact.delete({
-      where: {
-        id: Number(id),
-      },
-    });
-
     res.json({
       message: "Contact deleted",
-      contact,
+      contact: rows[0],
     });
   } catch (error) {
     console.log("DELETE CONTACT ERROR:", error);
@@ -76,38 +74,28 @@ const updateContactStatus = async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
 
-    if (isNaN(Number(id))) {
-      return res.status(400).json({
-        error: "Invalid contact id",
-      });
-    }
-
     if (!status) {
       return res.status(400).json({
-        error: "Status is required",
+        error: "Status ist erforderlich.",
       });
     }
 
-    const allowedStatus = ["pending", "replied"];
+    const rows = await prisma.$queryRaw`
+      UPDATE "Contact"
+      SET status = ${status}
+      WHERE id = ${Number(id)}
+      RETURNING id, name, email, subject, message, status, "createdAt"
+    `;
 
-    if (!allowedStatus.includes(status)) {
-      return res.status(400).json({
-        error: "Invalid status",
+    if (rows.length === 0) {
+      return res.status(404).json({
+        error: "Contact not found",
       });
     }
-
-    const contact = await prisma.contact.update({
-      where: {
-        id: Number(id),
-      },
-      data: {
-        status,
-      },
-    });
 
     res.json({
       message: "Status updated",
-      contact,
+      contact: rows[0],
     });
   } catch (error) {
     console.log("UPDATE CONTACT STATUS ERROR:", error);
