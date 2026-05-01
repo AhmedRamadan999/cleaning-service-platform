@@ -4,34 +4,51 @@ import { API_URL } from "../config/api";
 
 const AdminContacts = () => {
   const [contacts, setContacts] = useState([]);
+  const [error, setError] = useState("");
 
   const fetchContacts = async () => {
     try {
+      setError("");
+
       const res = await fetch(`${API_URL}/contact`);
-      const data = await res.json();
+      const data = await res.json().catch(() => null);
+
+      if (!res.ok) {
+        throw new Error(
+          data?.error || "Contact messages konnten nicht geladen werden.",
+        );
+      }
 
       setContacts(Array.isArray(data) ? data : []);
     } catch (err) {
-      console.log(err);
+      console.log("FETCH CONTACTS ERROR:", err);
+      setError(err.message);
       setContacts([]);
     }
   };
 
   const deleteContact = async (id) => {
     try {
-      await fetch(`${API_URL}/contact/${id}`, {
+      const res = await fetch(`${API_URL}/contact/${id}`, {
         method: "DELETE",
       });
 
+      const data = await res.json().catch(() => null);
+
+      if (!res.ok) {
+        throw new Error(data?.error || "Contact konnte nicht gelöscht werden.");
+      }
+
       fetchContacts();
     } catch (err) {
-      console.log(err);
+      console.log("DELETE CONTACT ERROR:", err);
+      setError(err.message);
     }
   };
 
   const updateStatus = async (id, newStatus) => {
     try {
-      await fetch(`${API_URL}/contact/${id}/status`, {
+      const res = await fetch(`${API_URL}/contact/${id}/status`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -41,9 +58,16 @@ const AdminContacts = () => {
         }),
       });
 
+      const data = await res.json().catch(() => null);
+
+      if (!res.ok) {
+        throw new Error(data?.error || "Status konnte nicht geändert werden.");
+      }
+
       fetchContacts();
     } catch (err) {
-      console.log(err);
+      console.log("UPDATE CONTACT STATUS ERROR:", err);
+      setError(err.message);
     }
   };
 
@@ -54,6 +78,8 @@ const AdminContacts = () => {
   return (
     <>
       <h2>Contact Messages</h2>
+
+      {error && <p className="booking-error">{error}</p>}
 
       <div className="bookings-grid">
         {contacts.map((contact) => (

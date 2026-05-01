@@ -43,7 +43,7 @@ const Home = () => {
           </div>
         </section>
 
-        {/* SERVICES */}
+        
         <section className="services-home">
           <h2>Unsere Services</h2>
 
@@ -65,7 +65,7 @@ const Home = () => {
           </div>
         </section>
 
-        {/* BEFORE AFTER */}
+        
         <section className="before-after">
           <h2>Vorher / Nachher</h2>
 
